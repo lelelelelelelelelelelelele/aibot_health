@@ -1,0 +1,10 @@
+[project]
+name = "aibot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx==0.27.2",
+    "langchain-chatchat>=0.3.0.20240625",
+]
