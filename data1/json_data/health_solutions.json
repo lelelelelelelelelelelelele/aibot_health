@@ -1,0 +1,57 @@
+[
+  {
+    "solution_id": "sol_001",
+    "symptom": "睡眠障碍（失眠、入睡难、多梦、易醒）",
+    "ai_solution": "小愈机器人“睡眠专家”模式（pGz细胞加速律动/T度压力/脑神经同步激励）；智能止鼾枕；律动睡眠床垫。",
+    "tcm_solution": "中医点穴安神、头部刮痧；疏通心经、脾经、肾经、心包经。",
+    "diet_advice": "饮用酸枣仁百合茯苓茶、枸杞桑葚干玫瑰茶；内服酸枣仁牡丹膏、参斛阿胶膏。",
+    "lifestyle_advice": "晨起练习八段锦，日常梳头及跑步。",
+    "clinical_data": "2236例患者调理4周后有效率达85.6%；压力与睡眠改善率超70%。",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "solution_id": "sol_002",
+    "symptom": "脊柱及肌肉劳损（颈肩腰腿痛、富贵包、体态不正）",
+    "ai_solution": "AI天眼体态评估；小愈机器人“脊柱专家”（自重牵引、WBV垂直律动、石墨烯热纳）。",
+    "tcm_solution": "宫廷理筋术、正骨推拿、擀筋调理；大椎包专项调理。",
+    "diet_advice": "搭配参斛阿胶膏提升气血。",
+    "lifestyle_advice": "科学健身体系指导、拉伸、跑步。",
+    "clinical_data": "腰颈脊背疼痛改善有效率达100%；富贵包调理8周有效率90.6%。",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "solution_id": "sol_003",
+    "symptom": "寒湿亚健康（浮肿、月经不调、手足冰冷、痛风）",
+    "ai_solution": "小愈-AI生物能量仪（太赫兹波+生物正弦能量+石墨烯铺热）。",
+    "tcm_solution": "古法艾灸、拔罐/走罐、祛湿点穴。",
+    "diet_advice": "自制姜枣茶或饮用祛湿汤。",
+    "lifestyle_advice": "每天30分钟“踩一踩”生物能量仪。",
+    "clinical_data": "内分泌淋巴排毒调理15周，总有效率达83.3%。",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "solution_id": "sol_004",
+    "symptom": "脏腑与代谢问题（肠胃不适、便秘、内分泌失调）",
+    "ai_solution": "AI舌相评估；小愈机器人内平衡/胃肠模式。",
+    "tcm_solution": "脏腑点穴（腹部操作为主）、循经点穴、推拿理疗脏腑养护。",
+    "diet_advice": "内服香橼山楂膏或黄精鹿胶膏；饮用桂圆红枣茶。",
+    "lifestyle_advice": "晨起揉腹，配合有氧运动。",
+    "clinical_data": "便秘患者1365例调理3周有效率90%；慢病前期调理有效率约68.5%。",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "solution_id": "sol_005",
+    "symptom": "视疲劳及头痛（眼干、黑眼圈、耳鸣）",
+    "ai_solution": "小愈-AI护眼仪（18个微震动按摩头）。",
+    "tcm_solution": "头部点穴、疏通肝/胆/三焦经。",
+    "diet_advice": "饮用菊花枸杞决明子茶或滋阴补气方剂。",
+    "lifestyle_advice": "增加刮眼眶动作，配合跑步与拉伸。",
+    "clinical_data": "头痛/气血不足/免疫力差人群调理15周，有效率82.7%。",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  }
+]

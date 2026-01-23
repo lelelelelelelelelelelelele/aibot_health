@@ -1,0 +1,258 @@
+[
+  {
+    "service_id": "svc_001",
+    "category": "AI智能检测",
+    "service_name": "AI天眼健康筛查系统（小愈天眼）",
+    "description": "通过“机器视觉+信号采集”扫描面部、瞳孔与微表情，实时呈现包含心率、血压、血糖、血氧、呼吸率、心理压力等17项生命体征指标的健康风险评估报告。",
+    "equipment": ["小愈天眼-AI健康筛查系统（AI摄像头）"],
+    "duration": "检测约90秒，服务共10分钟",
+    "price_info": {
+      "standard": "50元",
+      "member": "47元",
+      "staff": "34元"
+    },
+    "target_symptom": "健康风险评估/亚健康筛查",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_002",
+    "category": "AI智能检测",
+    "service_name": "AI天眼体态评估系统",
+    "description": "对人体正面、背面和侧面拍照，通过人工智能医学大模型在线分析，针对脊柱侧弯、高低肩、长短腿等9项体态数据进行智能化评估。",
+    "equipment": ["小愈天眼-AI体态评估系统"],
+    "duration": "10分钟",
+    "price_info": {
+      "standard": "88元",
+      "member": "83元",
+      "staff": "60元"
+    },
+    "target_symptom": "脊柱侧弯、高低肩、驼背、颈椎强直",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_003",
+    "category": "AI智能检测",
+    "service_name": "小愈-AI舌相评估系统（四诊仪评估）",
+    "description": "结合面诊、舌诊、问诊，实时提取舌苔颜色、纹理、舌形等20+维度特征，辨识中医体质，提示12大系统健康风险。",
+    "equipment": ["AI舌相评估系统（四诊仪）"],
+    "duration": "10分钟",
+    "price_info": {
+      "standard": "128元",
+      "member": "120元",
+      "staff": "88元"
+    },
+    "target_symptom": "中医体质辨识/内分泌/胃肠风险",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_004",
+    "category": "AI科技智能调理",
+    "service_name": "小愈机器人床（脊柱/睡眠/综合调理）",
+    "description": "利用毫米级物理干预（pGz细胞加速律动、WBV垂直律动、自重牵引、太赫兹波等）进行针对性调理。",
+    "equipment": ["AI小愈机器人"],
+    "duration": "30分钟",
+    "price_info": {
+      "standard": "168元",
+      "member": "159元",
+      "staff": "115元"
+    },
+    "target_symptom": "职场颈肩腰腿痛、失眠、亚健康、青少年脊柱调理、产后康复",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_005",
+    "category": "AI科技智能调理",
+    "service_name": "AI生物能量仪调理",
+    "description": "通过太赫兹波+生物正弦能量+石墨烯铺热，产生内透热效应，激活细胞、排寒祛湿、通经活络。",
+    "equipment": ["小愈-AI生物能量仪"],
+    "duration": "30分钟",
+    "price_info": {
+      "standard": "88元",
+      "member": "83元",
+      "staff": "60元"
+    },
+    "target_symptom": "寒湿体质、月经失调、浮肿、手足冰冷、痛风",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_006",
+    "category": "AI科技智能调理",
+    "service_name": "小愈-AI护眼仪",
+    "description": "采用18个微震动点阵按摩头，3D按摩深度直达12mm，精准覆盖眼周穴位，结合五大模式与五行音乐。",
+    "equipment": ["小愈-AI护眼仪C101"],
+    "duration": "null",
+    "price_info": {
+      "standard": "null",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "眼疲劳",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_007",
+    "category": "专项综合调理套餐",
+    "service_name": "筋骨至尊套餐",
+    "description": "含AI智能检测、小愈机器人脊柱调理(40min)、中医理筋正骨推拿(20min)、科学健身体系指导(10min)。",
+    "equipment": ["小愈天眼", "AI小愈机器人"],
+    "duration": "70-80分钟",
+    "price_info": {
+      "standard": "598元",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "脊柱/颈肩腰深度调理",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_008",
+    "category": "专项综合调理套餐",
+    "service_name": "深睡修复套餐",
+    "description": "含AI智能检测、小愈机器人睡眠调理(30min)、中医点穴安神/头部刮痧(20min)、心理咨询(10min)。",
+    "equipment": ["AI小愈机器人"],
+    "duration": "约60分钟",
+    "price_info": {
+      "standard": "528元",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "睡眠障碍综合调理",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_009",
+    "category": "专项综合调理套餐",
+    "service_name": "内平衡调理套餐",
+    "description": "AI智能检测+AI小愈机器人内平衡调理(30min)+中医脏腑调理(20min)+专家辨证咨询(10min)+膳食建议。",
+    "equipment": ["AI小愈机器人"],
+    "duration": "约60分钟",
+    "price_info": {
+      "standard": "568元",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "肠胃/内分泌/微循环问题",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_010",
+    "category": "专项综合调理套餐",
+    "service_name": "AI科技调理畅享卡",
+    "description": "纯AI设备服务，包含小愈机器人(30min)+生物能量仪(30min)+体检报告解读。",
+    "equipment": ["AI小愈机器人", "小愈-AI生物能量仪"],
+    "duration": "60分钟",
+    "price_info": {
+      "standard": "参见项目报价单(周/月/季/年卡)",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "日常保健",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_011",
+    "category": "中医古法及5Dn一站式调理",
+    "service_name": "5Dn 一站式调理 (疼痛专项)",
+    "description": "针对特定部位（如大椎包/富贵包、胸廓畸形、脊柱侧弯、骨盆专项等）进行的深度综合干预。",
+    "equipment": ["null"],
+    "duration": "20-30分钟",
+    "price_info": {
+      "standard": "378-598元不等",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "大椎包、富贵包、脊柱侧弯等疼痛问题",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_012",
+    "category": "中医古法及5Dn一站式调理",
+    "service_name": "5Dn 一站式调理 (慢病/失眠/肥胖)",
+    "description": "针对慢病、失眠、肥胖等症状进行的深度综合干预。",
+    "equipment": ["null"],
+    "duration": "90分钟",
+    "price_info": {
+      "standard": "648元",
+      "member": "615元",
+      "staff": "518元"
+    },
+    "target_symptom": "慢病、失眠、肥胖",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_013",
+    "category": "中医特色古法单项",
+    "service_name": "擀筋调理",
+    "description": "中医古法擀筋服务。",
+    "equipment": ["null"],
+    "duration": "15分钟",
+    "price_info": {
+      "standard": "318元",
+      "member": "299元",
+      "staff": "null"
+    },
+    "target_symptom": "筋膜粘连",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_014",
+    "category": "中医特色古法单项",
+    "service_name": "艾灸调理",
+    "description": "中医古法艾灸服务。",
+    "equipment": ["null"],
+    "duration": "40分钟",
+    "price_info": {
+      "standard": "168元",
+      "member": "159元",
+      "staff": "null"
+    },
+    "target_symptom": "寒湿",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_015",
+    "category": "中医特色古法单项",
+    "service_name": "按摩推拿",
+    "description": "分理筋与舒缓。",
+    "equipment": ["null"],
+    "duration": "20-40分钟",
+    "price_info": {
+      "standard": "158-348元不等",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "肌肉疲劳/疼痛",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  },
+  {
+    "service_id": "svc_016",
+    "category": "中医特色古法单项",
+    "service_name": "循经点穴",
+    "description": "中医特色循经点穴。",
+    "equipment": ["null"],
+    "duration": "30分钟",
+    "price_info": {
+      "standard": "348元",
+      "member": "null",
+      "staff": "null"
+    },
+    "target_symptom": "经络淤堵",
+    "quality_score": 4.5,
+    "last_updated": "2026-01-24"
+  }
+]
