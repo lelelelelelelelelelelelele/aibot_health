@@ -2,7 +2,7 @@
 
 
 # 默认选用的 LLM 名称
-DEFAULT_LLM_MODEL: tongyi-qwen3-max-model
+DEFAULT_LLM_MODEL: qwen3-max
 
 # 默认选用的 Embedding 名称
 # DEFAULT_EMBEDDING_MODEL: bge-m3
@@ -223,6 +223,24 @@ MODEL_PLATFORMS:
       - glm-4.7
     embed_models: 
       - text-embedding-v2
+    text2image_models: []
+    image2text_models: []
+    rerank_models: []
+    speech2text_models: []
+    text2speech_models: []
+  - platform_name: iflow
+    platform_type: oneapi
+    api_base_url: https://apis.iflow.cn/v1
+    api_key: sk-41476f3ee452788e06c69575093e8301
+    api_proxy: ''
+    api_concurrencies: 1
+    auto_detect_model: false
+    llm_models:
+      - qwen3-max
+      - kimi-k2-0905
+      - deepseek-v3.2
+      - iflow-rome-30ba3b
+    embed_models: []
     text2image_models: []
     image2text_models: []
     rerank_models: []

@@ -1,0 +1,10 @@
+base_url: "http://127.0.0.1:7861"
+kb_name: "health clinic"
+request:
+  model: "qwen3-max"
+  stream: false
+  top_k: 3
+  score_threshold: 1.0
+  temperature: 0.7
+  prompt_name: "health"
+  return_direct: false

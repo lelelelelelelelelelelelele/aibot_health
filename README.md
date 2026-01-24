@@ -1,7 +1,21 @@
 # 🌿 健康小屋智能问答系统（RAG 知识库）
 
 > 基于私有知识库自动回答客户关于健康检测、养生产品、按摩服务、会员优惠等高频问题
-太棒了！你能走到这一步，说明后端“心脏”已经跳动起来了。现在我们需要进行**“体检”（QA 测试）**，确保这个大脑足够聪明、准确，然后才能给它穿上“衣服”（开发前端）。
+
+Plan: RAG 系统验收与交付（QA + API + 参数固化）
+把你 README 里的“5类考题 + 开发前3件事 + API脚本”落成一套可重复的验收流程：先对齐你当前版本的真实 API 路由与端口（以 Swagger 为准），再固化默认模型/检索参数，最后用脚本做回归测试并记录“通过/失败标准”，确保前端开发前后端接口与知识库行为稳定。
+
+Steps
+对齐启动方式与端口：用 main.py 或 chatchat start -a 启动，打开 http://localhost:7861/docs 确认 API 在线。
+确认真实 KB Chat 路由：在 Swagger 中找到并测试 KB 对话接口（你当前版本可能是 /chat/knowledge_base_chat_v1 而非 README 的旧路径）。
+固化默认模型与 embedding：在 model_settings.yaml 统一 DEFAULT_LLM_MODEL、DEFAULT_EMBEDDING_MODEL，并确保所选 embedding 在对应平台的 embed_models 中可用。
+固化检索参数来源：在 kb_settings.yaml（或对应 kb 配置）确认/补齐 VECTOR_SEARCH_TOP_K 与 SCORE_THRESHOLD 的默认值，使“不传参时也稳定”。
+知识库一致性与重建：检查 knowledge_base 下目标 KB（如 health clinic）的 content/ 与 vector_store/<embedding>/ 是否匹配；必要时用 chatchat kb -r（指定 KB/embedding）重建。
+落地 QA 套件与回归脚本：把 README 的 5 类问题变成一份“按顺序提问 + 期望关键点 + 失败标志”的验收清单，并将 Python 测试脚本的路由、KB 名称、模型名改为与你 Swagger/配置一致的一组固定值。
+Further Considerations
+你要验收的知识库名是 health clinic 还是 samples？（包含空格的 KB 名在命令行/API 里需要加引号/正确传参）
+你希望 embedding 走哪个平台：qwen(oneapi) 的 text-embedding-v2 还是 openai 的 text-embedding-3-small？（决定向量库目录与是否需要重建）
+README 里写的接口是旧版；以 Swagger 实测为准，是否同意我把 README 的接口路径更新到当前版本？
 
 除了测试问题，你确实还有几个**关键的技术动作**要在写前端代码前完成。我把它们整合成了一份**《系统验收与交付清单》**。
 
