@@ -1,3 +1,8 @@
+# todo
+frontend: add a voice response button
+password (short)
+欢迎语句，超链接一键直达
+
 # 🌿 小愈助手 (Xiao Yu Assistant) - 智能健康小屋 RAG 系统
 
 > **您好!我是“小愈助手”，由 [AI职工家庭健康小屋] 开发的智能健康顾问。**

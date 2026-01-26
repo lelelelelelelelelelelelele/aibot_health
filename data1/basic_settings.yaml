@@ -33,7 +33,7 @@ API_SERVER:
   host: 127.0.0.1
   port: 7861
   # public_host 填 cpolar 分配的公网地址（见下文）
-  public_host: your-id.cpolar.io      # ← 示例，实际以 cpolar 输出为准
+  public_host: 749a05d4.r10.cpolar.top      # ← 示例，实际以 cpolar 输出为准
   public_port: 443                    # cpolar HTTPS 默认走 443
 
 # WEBUI 服务器地址
