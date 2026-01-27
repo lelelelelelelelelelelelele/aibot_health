@@ -18,7 +18,7 @@ dependencies = [
 addopts = "-s -v"
 asyncio_default_fixture_loop_scope = "function"
 log_cli = true
-log_cli_level = "DEBUG"
+log_cli_level = "INFO"
 [tool.ruff.format]
 # 设置缩进风格为 tab
 indent-style = "space"

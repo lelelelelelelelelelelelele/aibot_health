@@ -1,7 +1,10 @@
 # todo
-frontend: add a voice response button
+frontend: add a voice response button done
 password (short)
-欢迎语句，超链接一键直达
+欢迎语句，超链接一键直达 done
+metadata hide
+voice change
+code understand
 
 # 🌿 小愈助手 (Xiao Yu Assistant) - 智能健康小屋 RAG 系统
 
@@ -103,10 +106,48 @@ npm run dev
 
 ## 📍 知识库管理建议
 
-为了保证“小愈助手”的精准性，建议将知识库按以下逻辑分类存放于 `data1/data/knowledge_base/`：
+### 1. 数据分发策略（节约 Token）
+由于向量库（Vector Store）文件较大且属于二进制格式，**不建议将其上传至 Git**。为了在多环境间同步且节省 Embedding 消耗：
+- **Git 仅保留源码**：所有知识库下的 `content/` 文件夹（包含原始 JSON/Markdown）会自动同步。
+- **离线同步索引**：建议将 `data1/data/knowledge_base/health clinic/vector_store` 文件夹及其同级目录下的 `info.db` 手动压缩备份。
+- **一键复用**：在新环境下，只需将这些压缩文件解压回对应位置，系统即可直接识别，无需重新调用 API 进行 Embedding（此操作可节省大量 Token 费用）。
+
+### 2. 目录结构
+建议将知识库按以下逻辑分类存放于 `data1/data/knowledge_base/`：
 - `services/`: 核心服务清单（检测/按摩/理疗）
 - `products/`: 养生药与健康产品
 - `membership/`: 会员等级与促销活动
+
+---
+
+## 🚀 跨平台迁移指南 (Windows -> Linux)
+
+由于 `data1` 文件夹中包含环境相关的绝对路径（如 `H:\project\...`），在 Windows 压缩并在 Linux 解压后需要修正路径才能启动。
+
+### Step 1: Windows 端压缩 (推荐使用 tar)
+在项目根目录下执行（Win10/11 已原生支持 `tar`）：
+```cmd
+tar -cvzf data1_migration.tar.gz data1
+```
+
+### Step 2: Linux 端解压
+将文件上传到 Linux 目标目录后执行：
+```bash
+tar -xvzf data1_migration.tar.gz
+```
+
+### Step 3: 启动并自动修复路径
+解压后，在 Linux 环境下直接运行 `main.py` 即可。该脚本会自动执行以下操作：
+1. **自动修复路径**：探测当前 Linux 绝对路径并替换 `data1/*.yaml` 中的旧 Windows 路径。
+2. **设置环境变量**：自动设置 `CHATCHAT_ROOT`。
+3. **启动后端**：执行 `chatchat start --api`。
+
+```bash
+# 推荐使用 uv 运行 (或直接使用 python)
+uv run python main.py
+```
+
+> **注意**：脚本中的 `fix_config_paths` 逻辑会优先处理 `sqlite:///` 开头的数据库连接，确保跨平台迁移后数据库能正常读取。
 
 ---
 

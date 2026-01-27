@@ -15,6 +15,14 @@ vector_store/
 samples/
 .vscode
 
+# Langchain-Chatchat Data
+data1/data/knowledge_base/*/vector_store/
+data1/data/knowledge_base/info.db
+data1/data/logs/
+data1/data/temp/
+data1/data/media/
+data1/nltk_data/
+
 1_files
 1.html
 test_reports
