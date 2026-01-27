@@ -26,3 +26,5 @@ data1/nltk_data/
 1_files
 1.html
 test_reports
+
+*.tar.gz
