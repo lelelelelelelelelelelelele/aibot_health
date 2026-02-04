@@ -130,6 +130,17 @@ npm run dev
 tar -cvzf data1_migration.tar.gz data1
 ```
 
+### （更安全）打包时自动脱敏
+`data1/model_settings.yaml` 等配置里可能包含真实 `api_key`（例如 `sk-...`），不建议把 `data1/` 原样打包发送。
+
+项目提供了一个“打包副本里自动脱敏 + 排除日志/临时目录”的脚本（不会修改你本地原始 `data1/`）：
+
+```bash
+python scripts/package_data1_bundle.py --src data1 --out data1_bundle.tgz
+```
+
+默认排除：`data1/data/logs`、`data1/data/temp`、所有 `__pycache__`；并将 YAML 中疑似密钥的 `api_key:` 值替换为 `''  # REDACTED`。
+
 ### Step 2: Linux 端解压
 将文件上传到 Linux 目标目录后执行：
 ```bash
