@@ -16,13 +16,16 @@ samples/
 .vscode
 
 # Langchain-Chatchat Data
-data1/data/knowledge_base/*/vector_store/
-data1/data/knowledge_base/info.db
+data1/data/knowledge_base/**/vector_store/
+data1/data/knowledge_base/**/*.db
 data1/data/logs/
 data1/data/temp/
 data1/data/media/
-data1/nltk_data/
-data1
+data1/data/nltk_data/
+
+# NOTE: do NOT ignore entire data1 by default; it contains configs you may want to track.
+# If you really want to ignore all of it, uncomment the next line.
+data1/
 
 1_files
 1.html

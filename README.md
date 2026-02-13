@@ -130,17 +130,6 @@ npm run dev
 tar -cvzf data1_migration.tar.gz data1
 ```
 
-### （更安全）打包时自动脱敏
-`data1/model_settings.yaml` 等配置里可能包含真实 `api_key`（例如 `sk-...`），不建议把 `data1/` 原样打包发送。
-
-项目提供了一个“打包副本里自动脱敏 + 排除日志/临时目录”的脚本（不会修改你本地原始 `data1/`）：
-
-```bash
-python scripts/package_data1_bundle.py --src data1 --out data1_bundle.tgz
-```
-
-默认排除：`data1/data/logs`、`data1/data/temp`、所有 `__pycache__`；并将 YAML 中疑似密钥的 `api_key:` 值替换为 `''  # REDACTED`。
-
 ### Step 2: Linux 端解压
 将文件上传到 Linux 目标目录后执行：
 ```bash
@@ -159,6 +148,30 @@ uv run python main.py
 ```
 
 > **注意**：脚本中的 `fix_config_paths` 逻辑会优先处理 `sqlite:///` 开头的数据库连接，确保跨平台迁移后数据库能正常读取。
+
+---
+
+## 📦 数据同步 (服务器 -> 本地)
+
+如果你经常需要从服务器同步 `data1/`（知识库与向量库）到本地 H 盘，推荐使用 **rsync 增量同步**。它只会传输有变动的文件，且支持断点续传。
+
+### 推荐做法 (WSL + H 盘)
+
+在 Windows 的 **WSL** 终端中执行以下命令（拉取服务器 `data1` 到本地 H 盘）：
+
+```bash
+# 请确保服务器上的 sshd 在 22 端口运行，且本地有对应的私钥
+rsync -av --delete --info=progress2 \
+  --exclude 'data/logs/**' \
+  --exclude 'data/temp/**' \
+  --exclude '**/__pycache__/**' \
+  -e "ssh -i /mnt/c/Users/MSI-NB/.ssh/id_rsa_aliyun" \
+  root@101.200.196.68:/project/aibot_health/data1/  /mnt/h/project/aibot/data1/
+```
+
+> **注意**：
+> 1. 如果服务器 SSH 端口不是 22，请在 `-e` 参数中指定，例如：`-e "ssh -p <端口> -i ..."`。
+> 2. 如果报错 `Connection refused`，请检查服务器安全组是否放行了 SSH 端口。
 
 ---
 
