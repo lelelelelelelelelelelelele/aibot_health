@@ -137,6 +137,7 @@ tar -xvzf data1_migration.tar.gz
 ```
 
 ### Step 3: 启动并自动修复路径
+
 解压后，在 Linux 环境下直接运行 `main.py` 即可。该脚本会自动执行以下操作：
 1. **自动修复路径**：探测当前 Linux 绝对路径并替换 `data1/*.yaml` 中的旧 Windows 路径。
 2. **设置环境变量**：自动设置 `CHATCHAT_ROOT`。

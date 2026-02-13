@@ -61,6 +61,8 @@ def check_config_paths(root_dir: Path):
     with open(config_path, "r", encoding="utf-8") as f:
         content = f.read()
 
+    current_abs_path = str((root_dir / "data1").absolute()).replace("\\", "/")
+
     def _extract_value(key: str) -> str | None:
         match = re.search(rf"^{key}:\s*(.+)$", content, flags=re.MULTILINE)
         return match.group(1).strip() if match else None
@@ -78,12 +80,19 @@ def check_config_paths(root_dir: Path):
         "SQLALCHEMY_DATABASE_URI": _sqlite_path(_extract_value("SQLALCHEMY_DATABASE_URI")),
     }
 
+    def _normalize_for_check(raw_value: str) -> str:
+        normalized = raw_value.replace("\\", "/")
+        if "/data1" in normalized:
+            suffix = normalized.split("/data1", 1)[1]
+            normalized = f"{current_abs_path}{suffix}"
+        return normalized
+
     for key, path_value in checks.items():
         if not path_value:
             print(f"⚠️  {key} not found in {config_path.name}")
             continue
-        normalized = path_value.replace("\\", "/")
-        exists = os.path.exists(path_value)
+        normalized = _normalize_for_check(path_value)
+        exists = os.path.exists(normalized)
         status = "✅" if exists else "❌"
         print(f"{status} {key} -> {normalized}")
 
