@@ -4,6 +4,7 @@ import sys
 import subprocess
 import glob
 import re
+from dataclasses import dataclass, field
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -49,19 +50,27 @@ def fix_config_paths(root_dir: Path):
         if new_content != content:
             with open(yaml_path, "w", encoding="utf-8") as f:
                 f.write(new_content)
-            print(f"🔧 Updated paths in {os.path.basename(yaml_path)}")
+            print(f"Updated paths in {os.path.basename(yaml_path)}")
 
-def check_config_paths(root_dir: Path):
-    """检查 basic_settings.yaml 中的关键路径是否存在"""
+@dataclass
+class ValidationResult:
+    ok: bool
+    missing_items: list[str]
+    checked_items: dict[str, dict[str, str | bool]]
+    warnings: list[str] = field(default_factory=list)
+
+def validate_basic_settings_paths(root_dir: Path) -> ValidationResult:
+    """校验 basic_settings.yaml 中关键配置路径是否存在。"""
     config_path = root_dir / "data1" / "basic_settings.yaml"
     if not config_path.exists():
-        print(f"⚠️  Missing config: {config_path}")
-        return
+        raise FileNotFoundError(f"ERROR: missing basic_settings.yaml at {config_path}")
 
     with open(config_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    current_abs_path = str((root_dir / "data1").absolute()).replace("\\", "/")
+    missing_items: list[str] = []
+    warnings: list[str] = []
+    checked_items: dict[str, dict[str, str | bool]] = {}
 
     def _extract_value(key: str) -> str | None:
         match = re.search(rf"^{key}:\s*(.+)$", content, flags=re.MULTILINE)
@@ -74,37 +83,91 @@ def check_config_paths(root_dir: Path):
             return uri.replace("sqlite:///", "", 1)
         return None
 
-    checks = {
-        "KB_ROOT_PATH": _extract_value("KB_ROOT_PATH"),
-        "DB_ROOT_PATH": _extract_value("DB_ROOT_PATH"),
-        "SQLALCHEMY_DATABASE_URI": _sqlite_path(_extract_value("SQLALCHEMY_DATABASE_URI")),
-    }
-
     def _normalize_for_check(raw_value: str) -> str:
         normalized = raw_value.replace("\\", "/")
-        if "/data1" in normalized:
-            suffix = normalized.split("/data1", 1)[1]
-            normalized = f"{current_abs_path}{suffix}"
-        return normalized
+        return os.path.normpath(normalized)
 
-    for key, path_value in checks.items():
-        if not path_value:
-            print(f"⚠️  {key} not found in {config_path.name}")
-            continue
-        normalized = _normalize_for_check(path_value)
-        exists = os.path.exists(normalized)
-        status = "✅" if exists else "❌"
-        print(f"{status} {key} -> {normalized}")
+    kb_root_raw = _extract_value("KB_ROOT_PATH")
+    if not kb_root_raw:
+        missing_items.append("KB_ROOT_PATH: not found in basic_settings.yaml")
+        checked_items["KB_ROOT_PATH"] = {"target": "<missing>", "exists": False}
+    else:
+        kb_root = _normalize_for_check(kb_root_raw)
+        kb_exists = Path(kb_root).is_dir()
+        checked_items["KB_ROOT_PATH"] = {"target": kb_root, "exists": kb_exists}
+        if not kb_exists:
+            missing_items.append(f"KB_ROOT_PATH: directory not found -> {kb_root}")
+
+    db_root_raw = _extract_value("DB_ROOT_PATH")
+    if not db_root_raw:
+        missing_items.append("DB_ROOT_PATH: not found in basic_settings.yaml")
+        checked_items["DB_ROOT_PATH"] = {"target": "<missing>", "exists": False}
+    else:
+        db_root = _normalize_for_check(db_root_raw)
+        db_exists = Path(db_root).is_file()
+        checked_items["DB_ROOT_PATH"] = {"target": db_root, "exists": db_exists}
+        if not db_exists:
+            missing_items.append(f"DB_ROOT_PATH: file not found -> {db_root}")
+
+    sqlalchemy_uri_raw = _extract_value("SQLALCHEMY_DATABASE_URI")
+    if not sqlalchemy_uri_raw:
+        missing_items.append("SQLALCHEMY_DATABASE_URI: not found in basic_settings.yaml")
+        checked_items["SQLALCHEMY_DATABASE_URI"] = {"target": "<missing>", "exists": False}
+    else:
+        sqlite_path = _sqlite_path(sqlalchemy_uri_raw)
+        if sqlite_path is None:
+            warnings.append("SQLALCHEMY_DATABASE_URI is not sqlite:///, skipping local file existence check.")
+            checked_items["SQLALCHEMY_DATABASE_URI"] = {"target": sqlalchemy_uri_raw, "exists": True}
+        else:
+            normalized_sqlite_path = _normalize_for_check(sqlite_path)
+            sqlite_exists = Path(normalized_sqlite_path).is_file()
+            checked_items["SQLALCHEMY_DATABASE_URI"] = {
+                "target": normalized_sqlite_path,
+                "exists": sqlite_exists,
+            }
+            if not sqlite_exists:
+                missing_items.append(f"SQLALCHEMY_DATABASE_URI: sqlite file not found -> {normalized_sqlite_path}")
+
+    return ValidationResult(
+        ok=not missing_items,
+        missing_items=missing_items,
+        checked_items=checked_items,
+        warnings=warnings,
+    )
+
+def check_config_paths(root_dir: Path) -> ValidationResult:
+    """打印并返回 basic_settings.yaml 的关键路径检查结果。"""
+    result = validate_basic_settings_paths(root_dir)
+    for key, detail in result.checked_items.items():
+        status = "✅" if bool(detail["exists"]) else "❌"
+        print(f"{status} {key} -> {detail['target']}")
+    for warning in result.warnings:
+        print(f"⚠️  {warning}")
+    return result
 
 def main():
     # 获取项目根目录
     project_root = Path(__file__).parent.absolute()
-    
-    # 1. 自动修正 data1 中的绝对路径 (关键：实现跨平台零配置)
-    fix_config_paths(project_root)
 
-    # 1.1 检查关键路径是否存在
-    check_config_paths(project_root)
+    config_path = project_root / "data1" / "basic_settings.yaml"
+    if not config_path.exists():
+        print(f"ERROR: missing basic_settings.yaml at {config_path}")
+        sys.exit(2)
+
+    print("🔍 Checking basic settings paths...")
+    validation = check_config_paths(project_root)
+    if not validation.ok:
+        print("⚠️  Path validation failed, attempting one-time path repair...")
+        for item in validation.missing_items:
+            print(f"⚠️  {item}")
+        fix_config_paths(project_root)
+        print("🔍 Re-checking basic settings paths after repair...")
+        validation = check_config_paths(project_root)
+        if not validation.ok:
+            print("❌ Path validation failed after one-time repair.")
+            for item in validation.missing_items:
+                print(f"❌ {item}")
+            sys.exit(2)
 
     # 2. 设置环境变量，确保 chatchat 能找到配置文件
     data1_path = str((project_root / "data1").absolute())
@@ -148,3 +211,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

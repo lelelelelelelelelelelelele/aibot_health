@@ -120,59 +120,19 @@ npm run dev
 
 ---
 
-## 🚀 跨平台迁移指南 (Windows -> Linux)
+## 📦 本地打包并上传替换（推荐）
 
-由于 `data1` 文件夹中包含环境相关的绝对路径（如 `H:\project\...`），在 Windows 压缩并在 Linux 解压后需要修正路径才能启动。
-
-### Step 1: Windows 端压缩 (推荐使用 tar)
-在项目根目录下执行（Win10/11 已原生支持 `tar`）：
-```cmd
-tar -cvzf data1_migration.tar.gz data1
-```
-
-### Step 2: Linux 端解压
-将文件上传到 Linux 目标目录后执行：
+建议使用最小运行包流程替代目录同步：
 ```bash
-tar -xvzf data1_migration.tar.gz
-```
-
-### Step 3: 启动并自动修复路径
-
-解压后，在 Linux 环境下直接运行 `main.py` 即可。该脚本会自动执行以下操作：
-1. **自动修复路径**：探测当前 Linux 绝对路径并替换 `data1/*.yaml` 中的旧 Windows 路径。
-2. **设置环境变量**：自动设置 `CHATCHAT_ROOT`。
-3. **启动后端**：执行 `chatchat start --api`。
-
-```bash
-# 推荐使用 uv 运行 (或直接使用 python)
+# 1) 本地打包（仅上传运行必需集）
+python scripts/package_data1_bundle.py --src data1 --out data1_runtime_bundle.tgz
+# 2) 上传到服务器目标目录并解压替换
+tar -xvzf data1_runtime_bundle.tgz
+# 3) 启动前校验并启动服务
 uv run python main.py
 ```
 
-> **注意**：脚本中的 `fix_config_paths` 逻辑会优先处理 `sqlite:///` 开头的数据库连接，确保跨平台迁移后数据库能正常读取。
-
----
-
-## 📦 数据同步 (服务器 -> 本地)
-
-如果你经常需要从服务器同步 `data1/`（知识库与向量库）到本地 H 盘，推荐使用 **rsync 增量同步**。它只会传输有变动的文件，且支持断点续传。
-
-### 推荐做法 (WSL + H 盘)
-
-在 Windows 的 **WSL** 终端中执行以下命令（拉取服务器 `data1` 到本地 H 盘）：
-
-```bash
-# 请确保服务器上的 sshd 在 22 端口运行，且本地有对应的私钥
-rsync -av --delete --info=progress2 \
-  --exclude 'data/logs/**' \
-  --exclude 'data/temp/**' \
-  --exclude '**/__pycache__/**' \
-  -e "ssh -i /mnt/c/Users/MSI-NB/.ssh/id_rsa_aliyun" \
-  root@101.200.196.68:/project/aibot_health/data1/  /mnt/h/project/aibot/data1/
-```
-
-> **注意**：
-> 1. 如果服务器 SSH 端口不是 22，请在 `-e` 参数中指定，例如：`-e "ssh -p <端口> -i ..."`。
-> 2. 如果报错 `Connection refused`，请检查服务器安全组是否放行了 SSH 端口。
+> **注意**：启动前必须存在 `data1/basic_settings.yaml`；缺失将直接退出并提示修复。若路径失效，启动脚本会尝试一次路径修复并再次校验。
 
 ---
 
