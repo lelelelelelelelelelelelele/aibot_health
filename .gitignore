@@ -14,6 +14,8 @@ logs
 vector_store/
 samples/
 .vscode
+.claude
+CLAUDE.md
 
 # Langchain-Chatchat Data
 data1/data/knowledge_base/**/vector_store/
@@ -32,3 +34,10 @@ data1/
 test_reports
 
 *.tar.gz
+.htaccess
+
+
+# Miniprogram
+miniprogram/node_modules/
+miniprogram/dist/
+miniprogram/.swc/
