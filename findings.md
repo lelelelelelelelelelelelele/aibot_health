@@ -32,14 +32,31 @@
 -
 
 ## New Features: 复制与 Markdown 渲染
-### 复制功能
-- 微信小程序使用 `wx.setClipboardData` API 实现复制
-- 需要为每条消息添加复制按钮
 
-### Markdown 渲染
-- 小程序原生不支持 Markdown
-- 可使用第三方库如 `towxml`、`wechat-markdown` 或自行解析
-- 需要考虑性能包体积
+### 功能确认
+1. **复制功能**: 每条 AI 回复消息旁边显示复制按钮，点击复制完整文本
+2. **Markdown 渲染**: 使用 wechat-markdown 库完整渲染 Markdown 为富文本
+
+### 技术选型：towxml
+- **npm 包**: towxml
+- **版本**: ^3.0.6
+- **描述**: HTML、Markdown转WXML(WeiXin Markup Language)渲染库
+- **安装命令**: `npm install towxml`
+- **使用方式**:
+  ```tsx
+  import Towxml from 'towxml';
+  const towxml = new Towxml();
+  // 渲染 Markdown
+  const result = towxml.toJson(markdownText, 'markdown');
+  ```
+- **注意事项**:
+  - towxml 是小程序原生兼容的库
+  - 需要将渲染结果转换为 Taro 组件
+
+### 复制功能实现
+- **API**: `wx.setClipboardData({ data: text })`
+- **按钮位置**: 每条 assistant 消息的右下角
+- **反馈**: 复制成功后显示 toast 提示
 ## Visual/Browser Findings
 <!-- Multimodal content must be captured as text immediately -->
 -
