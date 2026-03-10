@@ -1,7 +1,7 @@
 base_url: "http://127.0.0.1:7861"
 kb_name: "health clinic"
 request:
-  model: "qwen3-max"
+  model: "Qwen/Qwen3.5-397B-A17B"
   stream: false
   top_k: 3
   score_threshold: 0.1

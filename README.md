@@ -30,7 +30,7 @@ code understand
 ### 后端 (Backend)
 - **核心框架**：Langchain-Chatchat 0.3.1
 - **嵌入模型**：DashScope `text-embedding-v4` (OneAPI 兼容)
-- **大语言模型**：Qwen-max / Qwen3-max (OneAPI 托管)
+- **大语言模型**：Qwen-max / Qwen3.5-397B-A17B (OneAPI 托管)
 - **向量数据库**：FAISS (L2 距离度量)
 - **配置管理**：`data1` 目录下多维度 YAML 配置 (Model, KB, Prompt)
 
@@ -156,7 +156,7 @@ uv run python main.py
 ```python
 # 核心请求参数示例
 payload = {
-    "model": "qwen3-max",         # 使用的大模型名称
+    "model": "Qwen/Qwen3.5-397B-A17B",         # 使用的大模型名称
     "messages": [                 # 历史对话与当前问题
         {"role": "user", "content": "AI天眼多少钱？"}
     ],

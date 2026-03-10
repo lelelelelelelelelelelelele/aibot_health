@@ -31,6 +31,15 @@
 <!-- URLs, file paths, API references -->
 -
 
+## New Features: 复制与 Markdown 渲染
+### 复制功能
+- 微信小程序使用 `wx.setClipboardData` API 实现复制
+- 需要为每条消息添加复制按钮
+
+### Markdown 渲染
+- 小程序原生不支持 Markdown
+- 可使用第三方库如 `towxml`、`wechat-markdown` 或自行解析
+- 需要考虑性能包体积
 ## Visual/Browser Findings
 <!-- Multimodal content must be captured as text immediately -->
 -

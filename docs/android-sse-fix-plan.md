@@ -178,7 +178,7 @@ nginx -t
 curl -N -X POST https://api.cpagz.com/knowledge_base/local_kb/health%20clinic/chat/completions \
   -H "Content-Type: application/json" \
   -H "Accept: text/event-stream" \
-  -d '{"model":"qwen3-max","messages":[{"role":"user","content":"你好"}],"stream":true}'
+  -d '{"model":"Qwen/Qwen3.5-397B-A17B","messages":[{"role":"user","content":"你好"}],"stream":true}'
 ```
 
 **成功标志**：

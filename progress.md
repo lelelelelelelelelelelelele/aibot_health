@@ -89,11 +89,11 @@
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 5 - 合并与部署 |
-| Where am I going? | 代码审查、合并到主分支、更新文档 |
-| What's the goal? | 为 RAG 系统添加微信小程序前端支持，创建新分支开发并测试合并 |
+| Where am I? | Phase 6 - 复制与 Markdown 渲染功能 |
+| Where am I going? | 实现复制和 Markdown 渲染功能 |
+| What's the goal? | 为微信小程序添加复制和 Markdown 渲染功能 |
 | What have I learned? | 使用 Taro (React) 框架，共用 utils 和后端 API |
-| What have I done? | 完成 Phase 4 - 构建测试通过 |
+| What have I done? | 添加 Phase 6 到任务计划 |
 
 ---
 *Update after completing each phase or encountering errors*
