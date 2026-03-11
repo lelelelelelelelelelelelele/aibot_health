@@ -57,6 +57,16 @@
 - **API**: `wx.setClipboardData({ data: text })`
 - **按钮位置**: 每条 assistant 消息的右下角
 - **反馈**: 复制成功后显示 toast 提示
+
+### 最终实现
+- **依赖**: towxml ^3.0.6（最终选择，原计划 wechat-markdown 不存在）
+- **组件**: MarkdownView.tsx - 使用 towxml 解析 Markdown 并渲染为 Taro 组件
+- **复制**: 使用 Taro.setClipboardData API
+- **构建**: 成功生成 dist 目录
+
+### 提交记录
+- a4382ec feat: add MarkdownView component using towxml for rendering markdown content
+- 081c68e feat: add copy button and integrate MarkdownView for assistant messages
 ## Visual/Browser Findings
 <!-- Multimodal content must be captured as text immediately -->
 -

@@ -42,10 +42,10 @@ Phase 5
 - **Status:** in_progress
 
 ### Phase 6: 复制与 Markdown 渲染功能
-- [ ] 实现文本复制功能
-- [ ] 添加 Markdown 解析与渲染
-- [ ] 测试复制和渲染功能
-- **Status:** pending
+- [x] 实现文本复制功能
+- [x] 添加 Markdown 解析与渲染
+- [x] 测试复制和渲染功能（构建成功）
+- **Status:** complete
 
 ## Key Questions
 1. 微信小程序需要使用原生开发还是 Taro/uni-app 等跨端框架？ → **Taro (React)** - 复用现有 React 技术栈

@@ -1,0 +1,542 @@
+{
+  "generated_at": "2026-03-12T06:44:28",
+  "endpoint": "https://api.cpagz.com/knowledge_base/local_kb/health%20clinic/chat/completions",
+  "prompt": "AI天眼筛查多少钱？",
+  "runs": 3,
+  "models": [
+    "Qwen/Qwen3.5-397B-A17B",
+    "MiniMax/MiniMax-M2.5",
+    "moonshotai/Kimi-K2.5",
+    "Qwen/Qwen3.5-122B-A10B",
+    "Qwen/Qwen3.5-35B-A3B",
+    "ZhipuAI/GLM-5",
+    "qwen3.5-flash-2026-02-23"
+  ],
+  "max_content_events": 2,
+  "summary": [
+    {
+      "model": "moonshotai/Kimi-K2.5",
+      "runs": 3,
+      "successful_runs": 3,
+      "first_content_runs": 3,
+      "connect_or_headers_ms": {
+        "min": 680.486,
+        "avg": 701.471,
+        "max": 737.254
+      },
+      "first_sse_event_ms": {
+        "min": 1300.811,
+        "avg": 1320.831,
+        "max": 1351.487
+      },
+      "first_docs_ms": {
+        "min": 1300.811,
+        "avg": 1320.831,
+        "max": 1351.487
+      },
+      "first_non_empty_content_ms": {
+        "min": 1932.22,
+        "avg": 3729.431,
+        "max": 7012.125
+      },
+      "total_ms": {
+        "min": 1975.679,
+        "avg": 3771.233,
+        "max": 7054.214
+      },
+      "errors": []
+    },
+    {
+      "model": "MiniMax/MiniMax-M2.5",
+      "runs": 3,
+      "successful_runs": 3,
+      "first_content_runs": 3,
+      "connect_or_headers_ms": {
+        "min": 689.401,
+        "avg": 727.228,
+        "max": 759.581
+      },
+      "first_sse_event_ms": {
+        "min": 1242.476,
+        "avg": 1360.812,
+        "max": 1499.366
+      },
+      "first_docs_ms": {
+        "min": 1242.476,
+        "avg": 1360.812,
+        "max": 1499.366
+      },
+      "first_non_empty_content_ms": {
+        "min": 4202.033,
+        "avg": 4704.991,
+        "max": 4957.822
+      },
+      "total_ms": {
+        "min": 4282.103,
+        "avg": 4775.719,
+        "max": 5041.533
+      },
+      "errors": []
+    },
+    {
+      "model": "Qwen/Qwen3.5-35B-A3B",
+      "runs": 3,
+      "successful_runs": 3,
+      "first_content_runs": 3,
+      "connect_or_headers_ms": {
+        "min": 725.589,
+        "avg": 770.59,
+        "max": 797.337
+      },
+      "first_sse_event_ms": {
+        "min": 1356.272,
+        "avg": 1390.901,
+        "max": 1414.929
+      },
+      "first_docs_ms": {
+        "min": 1356.272,
+        "avg": 1390.901,
+        "max": 1414.929
+      },
+      "first_non_empty_content_ms": {
+        "min": 13623.989,
+        "avg": 13877.179,
+        "max": 14314.583
+      },
+      "total_ms": {
+        "min": 13653.642,
+        "avg": 13889.178,
+        "max": 14316.981
+      },
+      "errors": []
+    },
+    {
+      "model": "ZhipuAI/GLM-5",
+      "runs": 3,
+      "successful_runs": 3,
+      "first_content_runs": 3,
+      "connect_or_headers_ms": {
+        "min": 725.798,
+        "avg": 733.707,
+        "max": 738.77
+      },
+      "first_sse_event_ms": {
+        "min": 1375.703,
+        "avg": 1427.525,
+        "max": 1487.276
+      },
+      "first_docs_ms": {
+        "min": 1375.703,
+        "avg": 1427.525,
+        "max": 1487.276
+      },
+      "first_non_empty_content_ms": {
+        "min": 22660.023,
+        "avg": 25098.182,
+        "max": 29844.069
+      },
+      "total_ms": {
+        "min": 22787.299,
+        "avg": 25292.292,
+        "max": 29885.639
+      },
+      "errors": []
+    },
+    {
+      "model": "Qwen/Qwen3.5-122B-A10B",
+      "runs": 3,
+      "successful_runs": 3,
+      "first_content_runs": 3,
+      "connect_or_headers_ms": {
+        "min": 691.608,
+        "avg": 738.052,
+        "max": 785.165
+      },
+      "first_sse_event_ms": {
+        "min": 1300.763,
+        "avg": 1372.227,
+        "max": 1444.633
+      },
+      "first_docs_ms": {
+        "min": 1300.763,
+        "avg": 1372.227,
+        "max": 1444.633
+      },
+      "first_non_empty_content_ms": {
+        "min": 17575.752,
+        "avg": 29053.952,
+        "max": 37132.738
+      },
+      "total_ms": {
+        "min": 17576.74,
+        "avg": 29179.227,
+        "max": 37189.652
+      },
+      "errors": []
+    },
+    {
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "runs": 3,
+      "successful_runs": 3,
+      "first_content_runs": 3,
+      "connect_or_headers_ms": {
+        "min": 671.889,
+        "avg": 771.886,
+        "max": 957.891
+      },
+      "first_sse_event_ms": {
+        "min": 1316.709,
+        "avg": 1412.034,
+        "max": 1598.529
+      },
+      "first_docs_ms": {
+        "min": 1316.709,
+        "avg": 1412.034,
+        "max": 1598.529
+      },
+      "first_non_empty_content_ms": {
+        "min": 35802.193,
+        "avg": 44160.534,
+        "max": 49883.003
+      },
+      "total_ms": {
+        "min": 35911.723,
+        "avg": 44232.673,
+        "max": 49986.84
+      },
+      "errors": []
+    },
+    {
+      "model": "qwen3.5-flash-2026-02-23",
+      "runs": 3,
+      "successful_runs": 0,
+      "first_content_runs": 0,
+      "connect_or_headers_ms": {
+        "min": 739.21,
+        "avg": 771.931,
+        "max": 789.452
+      },
+      "first_sse_event_ms": {
+        "min": 1330.793,
+        "avg": 1363.32,
+        "max": 1389.6
+      },
+      "first_docs_ms": {
+        "min": null,
+        "avg": null,
+        "max": null
+      },
+      "first_non_empty_content_ms": {
+        "min": null,
+        "avg": null,
+        "max": null
+      },
+      "total_ms": {
+        "min": 1331.69,
+        "avg": 1363.974,
+        "max": 1390.467
+      },
+      "errors": [
+        "Expected a Runnable, callable or dict.Instead got an unsupported type: <class 'NoneType'>",
+        "Expected a Runnable, callable or dict.Instead got an unsupported type: <class 'NoneType'>",
+        "Expected a Runnable, callable or dict.Instead got an unsupported type: <class 'NoneType'>"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 957.891,
+      "first_sse_event_ms": 1598.529,
+      "first_docs_ms": 1598.529,
+      "first_non_empty_content_ms": 35802.193,
+      "total_ms": 35911.723,
+      "content_chars": 7,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 671.889,
+      "first_sse_event_ms": 1320.865,
+      "first_docs_ms": 1320.865,
+      "first_non_empty_content_ms": 46796.405,
+      "total_ms": 46799.457,
+      "content_chars": 9,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 685.879,
+      "first_sse_event_ms": 1316.709,
+      "first_docs_ms": 1316.709,
+      "first_non_empty_content_ms": 49883.003,
+      "total_ms": 49986.84,
+      "content_chars": 7,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "MiniMax/MiniMax-M2.5",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 732.703,
+      "first_sse_event_ms": 1499.366,
+      "first_docs_ms": 1499.366,
+      "first_non_empty_content_ms": 4202.033,
+      "total_ms": 4282.103,
+      "content_chars": 14,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "MiniMax/MiniMax-M2.5",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 689.401,
+      "first_sse_event_ms": 1242.476,
+      "first_docs_ms": 1242.476,
+      "first_non_empty_content_ms": 4955.117,
+      "total_ms": 5003.521,
+      "content_chars": 9,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "MiniMax/MiniMax-M2.5",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 759.581,
+      "first_sse_event_ms": 1340.594,
+      "first_docs_ms": 1340.594,
+      "first_non_empty_content_ms": 4957.822,
+      "total_ms": 5041.533,
+      "content_chars": 11,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "moonshotai/Kimi-K2.5",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 737.254,
+      "first_sse_event_ms": 1351.487,
+      "first_docs_ms": 1351.487,
+      "first_non_empty_content_ms": 7012.125,
+      "total_ms": 7054.214,
+      "content_chars": 3,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "moonshotai/Kimi-K2.5",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 680.486,
+      "first_sse_event_ms": 1310.195,
+      "first_docs_ms": 1310.195,
+      "first_non_empty_content_ms": 2243.948,
+      "total_ms": 2283.806,
+      "content_chars": 3,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "moonshotai/Kimi-K2.5",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 686.673,
+      "first_sse_event_ms": 1300.811,
+      "first_docs_ms": 1300.811,
+      "first_non_empty_content_ms": 1932.22,
+      "total_ms": 1975.679,
+      "content_chars": 3,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-122B-A10B",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 785.165,
+      "first_sse_event_ms": 1444.633,
+      "first_docs_ms": 1444.633,
+      "first_non_empty_content_ms": 37132.738,
+      "total_ms": 37189.652,
+      "content_chars": 12,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-122B-A10B",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 737.384,
+      "first_sse_event_ms": 1371.284,
+      "first_docs_ms": 1371.284,
+      "first_non_empty_content_ms": 17575.752,
+      "total_ms": 17576.74,
+      "content_chars": 6,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-122B-A10B",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 691.608,
+      "first_sse_event_ms": 1300.763,
+      "first_docs_ms": 1300.763,
+      "first_non_empty_content_ms": 32453.367,
+      "total_ms": 32771.288,
+      "content_chars": 11,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-35B-A3B",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 797.337,
+      "first_sse_event_ms": 1401.501,
+      "first_docs_ms": 1401.501,
+      "first_non_empty_content_ms": 13623.989,
+      "total_ms": 13653.642,
+      "content_chars": 10,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-35B-A3B",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 725.589,
+      "first_sse_event_ms": 1356.272,
+      "first_docs_ms": 1356.272,
+      "first_non_empty_content_ms": 14314.583,
+      "total_ms": 14316.981,
+      "content_chars": 6,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "Qwen/Qwen3.5-35B-A3B",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 788.845,
+      "first_sse_event_ms": 1414.929,
+      "first_docs_ms": 1414.929,
+      "first_non_empty_content_ms": 13692.965,
+      "total_ms": 13696.911,
+      "content_chars": 5,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "ZhipuAI/GLM-5",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 738.77,
+      "first_sse_event_ms": 1375.703,
+      "first_docs_ms": 1375.703,
+      "first_non_empty_content_ms": 22660.023,
+      "total_ms": 22787.299,
+      "content_chars": 14,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "ZhipuAI/GLM-5",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 736.553,
+      "first_sse_event_ms": 1419.597,
+      "first_docs_ms": 1419.597,
+      "first_non_empty_content_ms": 22790.453,
+      "total_ms": 23203.937,
+      "content_chars": 13,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "ZhipuAI/GLM-5",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 725.798,
+      "first_sse_event_ms": 1487.276,
+      "first_docs_ms": 1487.276,
+      "first_non_empty_content_ms": 29844.069,
+      "total_ms": 29885.639,
+      "content_chars": 9,
+      "event_count": 3,
+      "content_events": 2,
+      "error": null
+    },
+    {
+      "model": "qwen3.5-flash-2026-02-23",
+      "run_index": 1,
+      "status_code": 200,
+      "connect_or_headers_ms": 789.452,
+      "first_sse_event_ms": 1389.6,
+      "first_docs_ms": null,
+      "first_non_empty_content_ms": null,
+      "total_ms": 1390.467,
+      "content_chars": 0,
+      "event_count": 1,
+      "content_events": 0,
+      "error": "Expected a Runnable, callable or dict.Instead got an unsupported type: <class 'NoneType'>"
+    },
+    {
+      "model": "qwen3.5-flash-2026-02-23",
+      "run_index": 2,
+      "status_code": 200,
+      "connect_or_headers_ms": 739.21,
+      "first_sse_event_ms": 1330.793,
+      "first_docs_ms": null,
+      "first_non_empty_content_ms": null,
+      "total_ms": 1331.69,
+      "content_chars": 0,
+      "event_count": 1,
+      "content_events": 0,
+      "error": "Expected a Runnable, callable or dict.Instead got an unsupported type: <class 'NoneType'>"
+    },
+    {
+      "model": "qwen3.5-flash-2026-02-23",
+      "run_index": 3,
+      "status_code": 200,
+      "connect_or_headers_ms": 787.13,
+      "first_sse_event_ms": 1369.567,
+      "first_docs_ms": null,
+      "first_non_empty_content_ms": null,
+      "total_ms": 1369.764,
+      "content_chars": 0,
+      "event_count": 1,
+      "content_events": 0,
+      "error": "Expected a Runnable, callable or dict.Instead got an unsupported type: <class 'NoneType'>"
+    }
+  ]
+}

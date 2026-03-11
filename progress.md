@@ -1,5 +1,25 @@
 # Progress Log
 
+## Session: 2026-03-11
+
+### Phase 6: 复制与 Markdown 渲染功能
+- **Status:** in_progress
+- **Started:** 2026-03-11
+- **Completed:**
+- Actions taken:
+  - 安装 towxml 依赖（原计划用 wechat-markdown，但该包不存在）
+  - 创建 MarkdownView 组件用于渲染 Markdown
+  - 在聊天页面添加复制按钮
+  - 成功构建微信小程序包
+- Files created/modified:
+  - miniprogram/src/components/MarkdownView.tsx (created - Markdown 渲染组件)
+  - miniprogram/src/components/markdown-view.scss (created - 样式文件)
+  - miniprogram/src/pages/index/index.tsx (updated - 添加复制按钮和 MarkdownView)
+  - miniprogram/src/pages/index/index.scss (updated - 按钮样式)
+  - miniprogram/package.json (updated - 添加 towxml 依赖)
+
+---
+
 ## Session: 2026-02-23
 
 ### Phase 1: 需求分析与技术调研
