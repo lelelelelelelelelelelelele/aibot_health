@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phase 8 Completion Audit Report</title>
+  <style>
+    body { font-family: Arial, "Microsoft YaHei", sans-serif; margin: 32px; color: #172033; line-height: 1.55; }
+    h1 { margin-bottom: 4px; }
+    h2 { margin-top: 28px; border-bottom: 1px solid #d9e2ef; padding-bottom: 4px; }
+    .verdict { background: #eef7f1; border: 1px solid #b7dfc2; padding: 14px 16px; border-radius: 8px; }
+    .blocked { background: #fff7ed; border: 1px solid #fed7aa; padding: 12px 16px; border-radius: 8px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #d9e2ef; padding: 8px 10px; vertical-align: top; }
+    th { background: #f4f7fb; text-align: left; }
+    code { background: #f4f7fb; padding: 1px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Phase 8 Completion Audit Report</h1>
+  <p>Generated: 2026-07-08</p>
+  <div class="verdict">
+    <strong>Verdict:</strong> 本地可完成的 Phase 8 改进已完成并有验证证据。
+  </div>
+  <p class="blocked">剩余项需要外部状态或交付决策：KB backend live 验证、score gate 默认阈值校准、子仓提交/推送和父仓 gitlink 更新。</p>
+
+  <h2>Requirement Audit</h2>
+  <table>
+    <thead><tr><th>Requirement</th><th>Status</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>列出问题并排序</td><td>Complete</td><td>Ordered Issues 表覆盖 payload、QA、文档、submodule、score gate</td></tr>
+      <tr><td>统一 payload contract</td><td>Complete</td><td>Web、小程序、pytest 均使用 <code>model + messages + stream + extra_body</code></td></tr>
+      <tr><td>防止 QA 工具绕过 contract</td><td>Complete</td><td>向量脚本改用共享 builder，pytest 禁止 <code>**request_config</code></td></tr>
+      <tr><td>更新测试</td><td>Complete</td><td><code>uv run pytest tests/test_kb_chat.py -q</code>: 8 passed, 8 skipped</td></tr>
+      <tr><td>召回证据检查</td><td>Complete</td><td>解析 docs/source/quality/similarity evidence，业务用例要求 docs</td></tr>
+      <tr><td>医疗边界检查</td><td>Complete</td><td>新增手术拒绝 guard 和危险表述黑名单</td></tr>
+      <tr><td>score gate</td><td>Complete locally</td><td>新增 score gate 环境变量；真实阈值待 live 样本</td></tr>
+      <tr><td>Markdown + HTML 报告</td><td>Complete</td><td>Phase 8、submodule、KB chat、vector 报告均有 Markdown/HTML</td></tr>
+      <tr><td>架构文档同步</td><td>Complete</td><td>Blueprint/schema/SVG/HTML 已同步；PNG 因 Cairo 缺失未刷新</td></tr>
+      <tr><td>submodule 状态可审计</td><td>Complete locally</td><td><code>scripts/audit_submodules.py</code> 生成 JSON/MD/HTML</td></tr>
+      <tr><td>live backend 全量验收</td><td>Blocked</td><td>KB backend 不可达，集成用例 skip</td></tr>
+      <tr><td>子仓提交/推送与 gitlink 更新</td><td>Blocked</td><td>需要执行/确认 frontend 和 miniprogram 子仓交付决策</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Current Evidence Snapshot</h2>
+  <table>
+    <thead><tr><th>Evidence</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><code>uv run pytest tests/test_kb_chat.py -q</code></td><td>8 passed, 8 skipped</td></tr>
+      <tr><td><code>npm run lint</code> in frontend</td><td>Passed</td></tr>
+      <tr><td>Python compile checks</td><td>Passed</td></tr>
+      <tr><td>Submodule audit script</td><td>Passed; wrote JSON/Markdown/HTML</td></tr>
+      <tr><td>frontend submodule</td><td>ahead 1, dirty 3, no parent pointer drift</td></tr>
+      <tr><td>miniprogram submodule</td><td>ahead 12, dirty 0, parent pointer drift yes</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Remaining Decision Path</h2>
+  <ol>
+    <li>Start or expose the KB backend at the configured test URL.</li>
+    <li>Run live KB chat pytest without skips and inspect score summaries.</li>
+    <li>Choose score gate defaults from real samples and document them.</li>
+    <li>Decide whether frontend <code>summary.md</code> belongs with the RAG contract commit.</li>
+    <li>Commit/push child repos, then update parent gitlink pointers intentionally.</li>
+  </ol>
+</body>
+</html>

@@ -1,0 +1,153 @@
+meta:
+  title: "RAG Robot / 小愈助手 架构图"
+  subtitle: "健康小屋 RAG 咨询系统: 前端入口 -> Chatchat API -> FAISS 知识库 -> Qwen/DashScope"
+  updated: "2026-07-08"
+  version: "0.1"
+  direction: top_to_bottom
+
+categories:
+  front:
+    role: "用户入口 / 前端适配"
+    fill: "#e0e7ff"
+    stroke: "#6366f1"
+  core:
+    role: "RAG 运行时 / API 边界"
+    fill: "#dbeafe"
+    stroke: "#2563eb"
+  data:
+    role: "知识库 / 持久数据"
+    fill: "#d1fae5"
+    stroke: "#059669"
+  external:
+    role: "外部模型服务"
+    fill: "#fce7f3"
+    stroke: "#db2777"
+  quality:
+    role: "测试 / 质量反馈"
+    fill: "#fef3c7"
+    stroke: "#d97706"
+  deploy:
+    role: "部署 / 运行包"
+    fill: "#f3f4f6"
+    stroke: "#6b7280"
+
+nodes:
+  - id: web_app
+    label: "网页聊天入口"
+    category: front
+    signature: "Next.js + ProChat"
+    note: "Git submodule: frontend"
+    layer: top
+    layout: {x: 120, y: 150, w: 310, h: 164}
+
+  - id: miniprogram
+    label: "微信小程序入口"
+    category: front
+    signature: "Taro + wx.request"
+    note: "Git submodule: miniprogram"
+    layer: top
+    layout: {x: 515, y: 150, w: 310, h: 164}
+
+  - id: chat_api
+    label: "知识库 Chat API"
+    category: core
+    signature: "/knowledge_base/local_kb/{kb}/chat/completions"
+    note: "OpenAI-compatible + docs-first SSE"
+    layer: middle
+    layout: {x: 325, y: 410, w: 360, h: 122}
+
+  - id: rag_runtime
+    label: "Chatchat RAG 运行时"
+    category: core
+    signature: "top_k / score_threshold / prompt_name"
+    note: "main.py sets CHATCHAT_ROOT=data1"
+    layer: middle
+    layout: {x: 780, y: 410, w: 360, h: 174}
+
+  - id: model_services
+    label: "模型与 Embedding 服务"
+    category: external
+    signature: "Qwen-max / Qwen3.5 + DashScope embedding"
+    note: "OneAPI-compatible external dependency"
+    layer: middle
+    layout: {x: 1235, y: 410, w: 340, h: 138}
+
+  - id: knowledge_pipeline
+    label: "知识蒸馏流水线"
+    category: data
+    signature: "NotebookLM -> Qwen JSON schema -> human QA"
+    note: "服务/产品/症状方案/会员/机构信息"
+    layer: bottom
+    layout: {x: 120, y: 700, w: 340, h: 178}
+
+  - id: kb_store
+    label: "健康小屋知识库"
+    category: data
+    signature: "JSON / Markdown content + FAISS + info.db"
+    note: "data1/data/knowledge_base"
+    shape: cylinder
+    layer: bottom
+    layout: {x: 555, y: 700, w: 340, h: 140}
+
+  - id: qa_harness
+    label: "RAG QA 与回归报告"
+    category: quality
+    signature: "pytest + kb_chat_report + vector similarity"
+    note: "tests/test_kb_chat.py / test_reports"
+    layer: bottom
+    layout: {x: 990, y: 700, w: 340, h: 174}
+
+  - id: deploy_bundle
+    label: "部署与迁移边界"
+    category: deploy
+    signature: "data1 runtime bundle + frontend/miniprogram deploy"
+    note: "scripts/package_data1_bundle.py / deployment"
+    layer: bottom
+    layout: {x: 1425, y: 700, w: 330, h: 138}
+
+groups:
+  - id: client_surface
+    label: "用户体验入口"
+    nodes: [web_app, miniprogram]
+    fill: "#eef2ff"
+    stroke: "#818cf8"
+  - id: rag_core
+    label: "RAG 服务边界"
+    nodes: [chat_api, rag_runtime, model_services]
+    fill: "#eff6ff"
+    stroke: "#60a5fa"
+  - id: knowledge_plane
+    label: "知识库数据面"
+    nodes: [knowledge_pipeline, kb_store]
+    fill: "#ecfdf5"
+    stroke: "#34d399"
+  - id: ops_plane
+    label: "质量与交付"
+    nodes: [qa_harness, deploy_bundle]
+    fill: "#f8fafc"
+    stroke: "#94a3b8"
+
+callouts:
+  - id: contract_warning
+    label: "已收敛: Web / 小程序 / pytest 使用 messages + stream + extra_body"
+    target: chat_api
+    fill: "#fff7ed"
+    stroke: "#fb923c"
+    layout: {x: 300, y: 560, w: 430, h: 36}
+  - id: compliance_boundary
+    label: "公开上线受 ICP / 生成式 AI 备案 / 健康类目约束"
+    target: deploy_bundle
+    fill: "#f8fafc"
+    stroke: "#94a3b8"
+    layout: {x: 1390, y: 865, w: 390, h: 36}
+
+edges:
+  - {from: web_app, to: chat_api, kind: data_flow, label: "POST + SSE stream"}
+  - {from: miniprogram, to: chat_api, kind: data_flow, label: "wx.request chunk stream"}
+  - {from: chat_api, to: rag_runtime, kind: data_flow, label: "messages + extra_body"}
+  - {from: rag_runtime, to: model_services, kind: data_flow, label: "embed + generate"}
+  - {from: knowledge_pipeline, to: kb_store, kind: data_flow}
+  - {from: rag_runtime, to: kb_store, kind: data_flow}
+  - {from: qa_harness, to: chat_api, kind: calibration, label: "acceptance questions"}
+  - {from: qa_harness, to: kb_store, kind: calibration}
+  - {from: kb_store, to: deploy_bundle, kind: data_flow, label: "data1 bundle"}

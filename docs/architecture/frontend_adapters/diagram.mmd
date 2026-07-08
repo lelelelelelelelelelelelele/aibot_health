@@ -1,0 +1,32 @@
+flowchart TD
+  parent_repo["父仓 aibot<br/>.gitmodules pins frontend + miniprogram"]
+  web_submodule["frontend submodule<br/>origin: jiaqi_health_bot<br/>Next.js / ProChat / browser SSE"]
+  mini_submodule["miniprogram submodule<br/>origin: H:/local-git/aibot-miniprogram.git<br/>Taro / wx.request / enableChunked"]
+  web_config["Web 配置与请求入口<br/>NEXT_PUBLIC_API_URL + DEFAULT_MODEL<br/>frontend/src/app/page.tsx"]
+  web_stream["Web 流式消费<br/>fetch + ReadableStream + TextDecoder"]
+  web_actions["Web UX actions<br/>QuickQuestions / VoiceControl / stop"]
+  mini_config["小程序配置与请求入口<br/>__API_URL__ / __MODEL__"]
+  mini_stream["小程序流式诊断层<br/>onChunkReceived + streamDiagnostics"]
+  mini_render["小程序渲染与操作<br/>MarkdownView + copy + voice placeholder"]
+  shared_contract["共享 RAG API 契约<br/>messages + stream + extra_body"]
+  frontend_quality["前端质量反馈<br/>Vitest / Playwright / stream diagnostics"]
+
+  parent_repo -->|"160000 gitlink"| web_submodule
+  parent_repo -->|"160000 gitlink"| mini_submodule
+  web_submodule --> web_config -->|"fetch payload"| web_stream -->|"rendered answer"| web_actions
+  mini_submodule --> mini_config -->|"wx.request"| mini_stream -->|"parsed markdown"| mini_render
+  web_stream -.->|"extra_body"| shared_contract
+  mini_stream -.->|"already extra_body"| shared_contract
+  frontend_quality -.->|"diagnostics"| mini_stream
+  frontend_quality -.->|"contract tests"| shared_contract
+
+  classDef boundary fill:#f3f4f6,stroke:#6b7280,stroke-width:2px
+  classDef web fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+  classDef mini fill:#d1fae5,stroke:#059669,stroke-width:2px
+  classDef contract fill:#dbeafe,stroke:#2563eb,stroke-width:2px
+  classDef quality fill:#fef3c7,stroke:#d97706,stroke-width:2px
+  class parent_repo boundary
+  class web_submodule,web_config,web_stream,web_actions web
+  class mini_submodule,mini_config,mini_stream,mini_render mini
+  class shared_contract contract
+  class frontend_quality quality

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Submodule Audit Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 28px; color: #172033; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #d9e2ef; padding: 8px; vertical-align: top; }
+    th { background: #f4f7fb; text-align: left; }
+    code { background: #f4f7fb; padding: 1px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Submodule Audit Report</h1>
+  <p><strong>Generated at:</strong> 2026-07-08T20:36:30</p>
+  <p><strong>Parent repo:</strong> <code>E:\project\aibot</code></p>
+  <h2>Parent Status</h2>
+  <ul><li><code> M findings.md</code></li><li><code> m frontend</code></li><li><code> M miniprogram</code></li><li><code> M progress.md</code></li><li><code> M task_plan.md</code></li></ul>
+  <h2>Submodules</h2>
+  <table>
+    <thead>
+      <tr><th>Name</th><th>Recorded</th><th>HEAD</th><th>Ahead</th><th>Behind</th><th>Dirty</th><th>Pointer Drift</th><th>Symbol</th></tr>
+    </thead>
+    <tbody><tr><td>frontend</td><td><code>0fe12ea</code></td><td><code>0fe12ea</code></td><td>0</td><td>0</td><td>1</td><td>no</td><td> </td></tr><tr><td>miniprogram</td><td><code>ac52ff4</code></td><td><code>25b0efb</code></td><td>12</td><td>0</td><td>0</td><td>yes</td><td>+</td></tr></tbody>
+  </table>
+  <h2>Recommended Order</h2>
+  <ol><li>Review each child repository diff and ahead commits inside the submodule.</li><li>Commit and push child repository changes before updating parent gitlinks.</li><li>Return to the parent repository and commit only intentional gitlink pointer updates.</li></ol>
+</body>
+</html>

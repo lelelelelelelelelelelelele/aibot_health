@@ -1,0 +1,156 @@
+meta:
+  title: "前端适配器子图"
+  subtitle: "两个 Git submodule: Web ProChat adapter 与 WeChat/Taro streaming adapter"
+  updated: "2026-07-08"
+  version: "0.1"
+  direction: top_to_bottom
+
+categories:
+  boundary:
+    role: "Git / 交付边界"
+    fill: "#f3f4f6"
+    stroke: "#6b7280"
+  web:
+    role: "Web adapter"
+    fill: "#e0e7ff"
+    stroke: "#6366f1"
+  mini:
+    role: "Mini Program adapter"
+    fill: "#d1fae5"
+    stroke: "#059669"
+  contract:
+    role: "共享 API 契约"
+    fill: "#dbeafe"
+    stroke: "#2563eb"
+  quality:
+    role: "测试与诊断"
+    fill: "#fef3c7"
+    stroke: "#d97706"
+
+nodes:
+  - id: parent_repo
+    label: "父仓 aibot"
+    category: boundary
+    signature: ".gitmodules pins frontend + miniprogram"
+    note: "父仓只记录子模块提交，不直接拥有前端代码变更"
+    layer: top
+    layout: {x: 655, y: 145, w: 430, h: 124}
+
+  - id: web_submodule
+    label: "frontend submodule"
+    category: web
+    signature: "origin: jiaqi_health_bot"
+    note: "Next.js / ProChat / browser SSE"
+    layer: middle
+    layout: {x: 125, y: 350, w: 345, h: 120}
+
+  - id: mini_submodule
+    label: "miniprogram submodule"
+    category: mini
+    signature: "origin: H:/local-git/aibot-miniprogram.git"
+    note: "Taro / wx.request / enableChunked"
+    layer: middle
+    layout: {x: 1265, y: 350, w: 390, h: 120}
+
+  - id: web_config
+    label: "Web 配置与请求入口"
+    category: web
+    signature: "NEXT_PUBLIC_API_URL + DEFAULT_MODEL"
+    note: "frontend/src/app/page.tsx"
+    layer: bottom
+    layout: {x: 80, y: 590, w: 330, h: 116}
+
+  - id: web_stream
+    label: "Web 流式消费"
+    category: web
+    signature: "fetch + ReadableStream + TextDecoder"
+    note: "docs-first SSE -> ProChat plain text"
+    layer: bottom
+    layout: {x: 450, y: 590, w: 350, h: 116}
+
+  - id: web_actions
+    label: "Web UX actions"
+    category: web
+    signature: "QuickQuestions / VoiceControl / stop"
+    note: "components + utils"
+    layer: bottom
+    layout: {x: 255, y: 760, w: 330, h: 116}
+
+  - id: mini_config
+    label: "小程序配置与请求入口"
+    category: mini
+    signature: "__API_URL__ / __MODEL__"
+    note: "src/config.ts + config/index.ts"
+    layer: bottom
+    layout: {x: 1015, y: 590, w: 330, h: 116}
+
+  - id: mini_stream
+    label: "小程序流式诊断层"
+    category: mini
+    signature: "onChunkReceived + streamDiagnostics"
+    note: "Android/H5 stream fallback handling"
+    layer: bottom
+    layout: {x: 1390, y: 590, w: 360, h: 116}
+
+  - id: mini_render
+    label: "小程序渲染与操作"
+    category: mini
+    signature: "MarkdownView + copy + voice placeholder"
+    note: "Markdown parser has unit/visual tests"
+    layer: bottom
+    layout: {x: 1195, y: 760, w: 360, h: 116}
+
+  - id: shared_contract
+    label: "共享 RAG API 契约"
+    category: contract
+    signature: "messages + stream + extra_body"
+    note: "Web / 小程序 / pytest call sites 已对齐; pytest 负责契约检查"
+    layer: bottom
+    layout: {x: 695, y: 930, w: 410, h: 126}
+
+  - id: frontend_quality
+    label: "前端质量反馈"
+    category: quality
+    signature: "Vitest / Playwright / stream diagnostics"
+    note: "小程序测试较强；Web 仍偏手工 smoke"
+    layer: bottom
+    layout: {x: 1170, y: 930, w: 360, h: 116}
+
+groups:
+  - id: submodule_boundary
+    label: "Git submodule 交付边界"
+    nodes: [parent_repo, web_submodule, mini_submodule]
+    fill: "#f8fafc"
+    stroke: "#94a3b8"
+  - id: web_adapter
+    label: "Web adapter"
+    nodes: [web_config, web_stream, web_actions]
+    fill: "#eef2ff"
+    stroke: "#818cf8"
+  - id: mini_adapter
+    label: "Mini Program adapter"
+    nodes: [mini_config, mini_stream, mini_render]
+    fill: "#ecfdf5"
+    stroke: "#34d399"
+
+callouts:
+  - id: submodule_state
+    label: "当前状态: frontend ahead 1; miniprogram ahead 12; 父仓 miniprogram pointer 已漂移"
+    target: parent_repo
+    fill: "#fff7ed"
+    stroke: "#fb923c"
+    layout: {x: 575, y: 290, w: 590, h: 36}
+
+edges:
+  - {from: parent_repo, to: web_submodule, kind: orchestration, label: "160000 gitlink"}
+  - {from: parent_repo, to: mini_submodule, kind: orchestration, label: "160000 gitlink"}
+  - {from: web_submodule, to: web_config, kind: data_flow}
+  - {from: web_config, to: web_stream, kind: data_flow, label: "fetch payload"}
+  - {from: web_stream, to: web_actions, kind: data_flow, label: "rendered answer"}
+  - {from: mini_submodule, to: mini_config, kind: data_flow}
+  - {from: mini_config, to: mini_stream, kind: data_flow, label: "wx.request"}
+  - {from: mini_stream, to: mini_render, kind: data_flow, label: "parsed markdown"}
+  - {from: web_stream, to: shared_contract, kind: calibration, label: "extra_body"}
+  - {from: mini_stream, to: shared_contract, kind: calibration, label: "already extra_body"}
+  - {from: frontend_quality, to: mini_stream, kind: calibration, label: "diagnostics"}
+  - {from: frontend_quality, to: shared_contract, kind: calibration, label: "contract tests"}

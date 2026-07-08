@@ -10,6 +10,7 @@ from typing import Any
 @dataclass
 class ReportPaths:
     json_path: Path
+    md_path: Path
     html_path: Path
 
 
@@ -23,6 +24,7 @@ def write_reports(results: list[dict[str, Any]], output_dir: str | Path = "test_
 
     ts = _timestamp()
     json_path = out_dir / f"kb_chat_test_report_{ts}.json"
+    md_path = out_dir / f"kb_chat_test_report_{ts}.md"
     html_path = out_dir / f"kb_chat_test_report_{ts}.html"
 
     total = len(results)
@@ -42,9 +44,79 @@ def write_reports(results: list[dict[str, Any]], output_dir: str | Path = "test_
     }
 
     json_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    md_path.write_text(_to_markdown(report), encoding="utf-8")
     html_path.write_text(_to_html(report), encoding="utf-8")
 
-    return ReportPaths(json_path=json_path, html_path=html_path)
+    return ReportPaths(json_path=json_path, md_path=md_path, html_path=html_path)
+
+
+def _evidence_summary(result: dict[str, Any]) -> str:
+    evidence = result.get("retrieval_evidence") or {}
+    docs_count = evidence.get("docs_count", 0)
+    sources = evidence.get("sources") or []
+    quality_scores = evidence.get("quality_scores") or []
+    similarity_scores = evidence.get("similarity_scores") or []
+    quality_summary = evidence.get("quality_score_summary") or {}
+    similarity_summary = evidence.get("similarity_score_summary") or {}
+    score_gate_violations = result.get("score_gate_violations") or []
+    parts = [f"docs={docs_count}"]
+    if sources:
+        parts.append(f"sources={', '.join(str(s) for s in sources[:5])}")
+    if quality_scores:
+        parts.append(f"quality={quality_scores}")
+    if quality_summary.get("count"):
+        parts.append(
+            "quality_summary="
+            f"min:{quality_summary.get('min')},avg:{quality_summary.get('avg')},max:{quality_summary.get('max')}"
+        )
+    if similarity_scores:
+        parts.append(f"scores={similarity_scores}")
+    if similarity_summary.get("count"):
+        parts.append(
+            "score_summary="
+            f"min:{similarity_summary.get('min')},avg:{similarity_summary.get('avg')},max:{similarity_summary.get('max')},"
+            f"out_of_0_1:{similarity_summary.get('out_of_0_1_count', 0)}"
+        )
+    if score_gate_violations:
+        parts.append(f"score_gate={'; '.join(str(v) for v in score_gate_violations)}")
+    return "; ".join(parts)
+
+
+def _to_markdown(report: dict[str, Any]) -> str:
+    meta = report.get("report_metadata", {})
+    lines = [
+        "# KB Chat Pytest Report",
+        "",
+        f"- Generated at: {meta.get('generated_at', '')}",
+        f"- Total: {meta.get('total_tests', 0)}",
+        f"- Passed: {meta.get('passed_tests', 0)}",
+        f"- Failed: {meta.get('failed_tests', 0)}",
+        f"- Pass rate: {meta.get('pass_rate', 0):.2f}%",
+        "",
+        "| # | Case | Status | Question | Missing | Forbidden | Retrieval Evidence |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for i, result in enumerate(report.get("test_results", []), start=1):
+        status = "PASS" if result.get("ok") is True else "FAIL"
+        missing = json.dumps(result.get("missing", []), ensure_ascii=False)
+        forbidden = json.dumps(result.get("forbidden_found", []), ensure_ascii=False)
+        lines.append(
+            "| "
+            + " | ".join(
+                [
+                    str(i),
+                    _md_cell(str(result.get("test_name", ""))),
+                    status,
+                    _md_cell(str(result.get("question", ""))),
+                    _md_cell(missing),
+                    _md_cell(forbidden),
+                    _md_cell(_evidence_summary(result)),
+                ]
+            )
+            + " |"
+        )
+    lines.append("")
+    return "\n".join(lines)
 
 
 def _to_html(report: dict[str, Any]) -> str:
@@ -53,6 +125,7 @@ def _to_html(report: dict[str, Any]) -> str:
     for i, r in enumerate(report.get("test_results", []), start=1):
         ok = bool(r.get("ok"))
         status = "通过" if ok else "失败"
+        evidence = _evidence_summary(r)
         rows.append(
             "".join(
                 [
@@ -62,8 +135,10 @@ def _to_html(report: dict[str, Any]) -> str:
                     f"<td>{_esc(str(r.get('question', '')))}</td>",
                     f"<td>{status}</td>",
                     f"<td>{_esc(str(r.get('elapsed_s', '')))}</td>",
+                    f"<td style='white-space:pre-wrap'>{_esc(evidence)}</td>",
                     f"<td style='white-space:pre-wrap'>{_esc(str(r.get('answer', '')))}</td>",
                     f"<td style='white-space:pre-wrap'>{_esc(json.dumps(r.get('missing', []), ensure_ascii=False))}</td>",
+                    f"<td style='white-space:pre-wrap'>{_esc(json.dumps(r.get('forbidden_found', []), ensure_ascii=False))}</td>",
                     f"</tr>",
                 ]
             )
@@ -98,8 +173,10 @@ def _to_html(report: dict[str, Any]) -> str:
         <th>问题</th>
         <th>结果</th>
         <th>耗时(s)</th>
+        <th>检索证据</th>
         <th>回答</th>
         <th>缺失元素</th>
+        <th>禁用元素</th>
       </tr>
     </thead>
     <tbody>
@@ -119,3 +196,7 @@ def _esc(s: str) -> str:
         .replace('"', "&quot;")
         .replace("'", "&#39;")
     )
+
+
+def _md_cell(s: str) -> str:
+    return s.replace("|", "\\|").replace("\n", "<br>")

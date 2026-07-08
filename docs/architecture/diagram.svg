@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1001" viewBox="0 0 1800 1001">
+<defs>
+<marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+<path d="M2,2 L10,6 L2,10 Z" fill="#64748b"/>
+</marker>
+</defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="620.0" y="62.0" font-size="34" font-weight="800" fill="#0f172a">
+<tspan x="620.0" dy="0">RAG Robot / 小愈助手 架构图</tspan>
+</text>
+<text x="570.0" y="96.0" font-size="17" font-weight="400" fill="#64748b">
+<tspan x="570.0" dy="0">健康小屋 RAG 咨询系统: 前端入口 -&gt; Chatchat API -&gt; FAISS 知识库 -&gt; Qwen/DashScope</tspan>
+</text>
+<text x="1535.0" y="42.0" font-size="12" font-weight="600" fill="#94a3b8">
+<tspan x="1535.0" dy="0">source: schema.yaml · 2026-07-08</tspan>
+</text>
+<g id="groups">
+<g id="group-client_surface"><rect x="86.0" y="102.0" width="773.0" height="260.0" rx="26" fill="#eef2ff" fill-opacity="0.38" stroke="#818cf8" stroke-width="2"/><text x="108.0" y="132.0" font-size="16" font-weight="800" fill="#818cf8">
+<tspan x="108.0" dy="0">用户体验入口</tspan>
+</text></g>
+<g id="group-rag_core"><rect x="291.0" y="362.0" width="1318.0" height="270.0" rx="26" fill="#eff6ff" fill-opacity="0.38" stroke="#60a5fa" stroke-width="2"/><text x="313.0" y="392.0" font-size="16" font-weight="800" fill="#60a5fa">
+<tspan x="313.0" dy="0">RAG 服务边界</tspan>
+</text></g>
+<g id="group-knowledge_plane"><rect x="86.0" y="652.0" width="843.0" height="274.0" rx="26" fill="#ecfdf5" fill-opacity="0.38" stroke="#34d399" stroke-width="2"/><text x="108.0" y="682.0" font-size="16" font-weight="800" fill="#34d399">
+<tspan x="108.0" dy="0">知识库数据面</tspan>
+</text></g>
+<g id="group-ops_plane"><rect x="956.0" y="652.0" width="833.0" height="270.0" rx="26" fill="#f8fafc" fill-opacity="0.38" stroke="#94a3b8" stroke-width="2"/><text x="978.0" y="682.0" font-size="16" font-weight="800" fill="#94a3b8">
+<tspan x="978.0" dy="0">质量与交付</tspan>
+</text></g>
+</g>
+<g id="edges">
+<g class="edge edge-web_app-chat_api"><polyline points="275.0,314.0 275.0,362.0 505.0,362.0 505.0,410.0" fill="none" stroke="#6366f1" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="318.0" y="336.0" width="144" height="24" rx="12" fill="white" stroke="#e5e7eb"/><text x="326.0" y="352.0" font-size="11" font-weight="600" fill="#475569">
+<tspan x="326.0" dy="0">POST + SSE stream</tspan>
+</text></g>
+<g class="edge edge-miniprogram-chat_api"><polyline points="670.0,314.0 670.0,362.0 505.0,362.0 505.0,410.0" fill="none" stroke="#6366f1" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="515.5" y="336.0" width="144" height="24" rx="12" fill="white" stroke="#e5e7eb"/><text x="523.5" y="352.0" font-size="11" font-weight="600" fill="#475569">
+<tspan x="523.5" dy="0">wx.request chunk stream</tspan>
+</text></g>
+<g class="edge edge-chat_api-rag_runtime"><polyline points="505.0,532.0 505.0,471.0 960.0,471.0 960.0,410.0" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="660.5" y="445.0" width="144" height="24" rx="12" fill="white" stroke="#e5e7eb"/><text x="668.5" y="461.0" font-size="11" font-weight="600" fill="#475569">
+<tspan x="668.5" dy="0">messages + extra_body</tspan>
+</text></g>
+<g class="edge edge-rag_runtime-model_services"><polyline points="960.0,584.0 960.0,497.0 1405.0,497.0 1405.0,410.0" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="1110.5" y="471.0" width="144" height="24" rx="12" fill="white" stroke="#e5e7eb"/><text x="1118.5" y="487.0" font-size="11" font-weight="600" fill="#475569">
+<tspan x="1118.5" dy="0">embed + generate</tspan>
+</text></g>
+<g class="edge edge-knowledge_pipeline-kb_store"><polyline points="290.0,878.0 290.0,789.0 725.0,789.0 725.0,700.0" fill="none" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow)"/></g>
+<g class="edge edge-rag_runtime-kb_store"><polyline points="960.0,584.0 960.0,642.0 725.0,642.0 725.0,700.0" fill="none" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrow)"/></g>
+<g class="edge edge-qa_harness-chat_api"><polyline points="1160.0,700.0 1160.0,616.0 505.0,616.0 505.0,532.0" fill="none" stroke="#d97706" stroke-width="2.5" marker-end="url(#arrow)" stroke-dasharray="8 7"/><rect x="760.5" y="590.0" width="144" height="24" rx="12" fill="white" stroke="#e5e7eb"/><text x="768.5" y="606.0" font-size="11" font-weight="600" fill="#475569">
+<tspan x="768.5" dy="0">acceptance questions</tspan>
+</text></g>
+<g class="edge edge-qa_harness-kb_store"><polyline points="1160.0,874.0 1160.0,787.0 725.0,787.0 725.0,700.0" fill="none" stroke="#d97706" stroke-width="2.5" marker-end="url(#arrow)" stroke-dasharray="8 7"/></g>
+<g class="edge edge-kb_store-deploy_bundle"><polyline points="725.0,840.0 725.0,770.0 1590.0,770.0 1590.0,700.0" fill="none" stroke="#059669" stroke-width="2.5" marker-end="url(#arrow)"/><rect x="1085.5" y="744.0" width="144" height="24" rx="12" fill="white" stroke="#e5e7eb"/><text x="1093.5" y="760.0" font-size="11" font-weight="600" fill="#475569">
+<tspan x="1093.5" dy="0">data1 bundle</tspan>
+</text></g>
+</g>
+<g id="nodes">
+<g id="node-web_app">
+<rect x="120.0" y="150.0" width="310.0" height="164.0" rx="18" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+<text x="142.0" y="182.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="142.0" dy="0">网页聊天入口</tspan>
+</text>
+<text x="142.0" y="213.0" font-size="13" font-weight="700" fill="#6366f1">
+<tspan x="142.0" dy="0">Next.js + ProChat</tspan>
+</text>
+<line x1="142.0" y1="235.0" x2="408.0" y2="235.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="142.0" y="257.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="142.0" dy="0">Git submodule: frontend</tspan>
+</text>
+</g>
+<g id="node-miniprogram">
+<rect x="515.0" y="150.0" width="310.0" height="164.0" rx="18" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+<text x="537.0" y="182.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="537.0" dy="0">微信小程序入口</tspan>
+</text>
+<text x="537.0" y="213.0" font-size="13" font-weight="700" fill="#6366f1">
+<tspan x="537.0" dy="0">Taro + wx.request</tspan>
+</text>
+<line x1="537.0" y1="235.0" x2="803.0" y2="235.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="537.0" y="257.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="537.0" dy="0">Git submodule: miniprogram</tspan>
+</text>
+</g>
+<g id="node-chat_api">
+<rect x="325.0" y="410.0" width="360.0" height="122.0" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="347.0" y="442.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="347.0" dy="0">知识库 Chat API</tspan>
+</text>
+<text x="347.0" y="473.0" font-size="13" font-weight="700" fill="#2563eb">
+<tspan x="347.0" dy="0">/knowledge_base/local_kb/{kb}/chat/completions</tspan>
+</text>
+<line x1="347.0" y1="495.0" x2="663.0" y2="495.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="347.0" y="517.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="347.0" dy="0">OpenAI-compatible + docs-first SSE</tspan>
+</text>
+</g>
+<g id="node-rag_runtime">
+<rect x="780.0" y="410.0" width="360.0" height="174.0" rx="18" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+<text x="802.0" y="442.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="802.0" dy="0">Chatchat RAG 运行时</tspan>
+</text>
+<text x="802.0" y="473.0" font-size="13" font-weight="700" fill="#2563eb">
+<tspan x="802.0" dy="0">top_k / score_threshold /</tspan>
+<tspan x="802.0" dy="19">prompt_name</tspan>
+</text>
+<line x1="802.0" y1="514.0" x2="1118.0" y2="514.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="802.0" y="536.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="802.0" dy="0">main.py sets CHATCHAT_ROOT=data1</tspan>
+</text>
+</g>
+<g id="node-model_services">
+<rect x="1235.0" y="410.0" width="340.0" height="138.0" rx="18" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+<text x="1257.0" y="442.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="1257.0" dy="0">模型与 Embedding 服务</tspan>
+</text>
+<text x="1257.0" y="473.0" font-size="13" font-weight="700" fill="#db2777">
+<tspan x="1257.0" dy="0">Qwen-max / Qwen3.5 + DashScope</tspan>
+<tspan x="1257.0" dy="19">embedding</tspan>
+</text>
+<line x1="1257.0" y1="514.0" x2="1553.0" y2="514.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1257.0" y="536.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="1257.0" dy="0">OneAPI-compatible external</tspan>
+<tspan x="1257.0" dy="18">dependency</tspan>
+</text>
+</g>
+<g id="node-knowledge_pipeline">
+<rect x="120.0" y="700.0" width="340.0" height="178.0" rx="18" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+<text x="142.0" y="732.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="142.0" dy="0">知识蒸馏流水线</tspan>
+</text>
+<text x="142.0" y="763.0" font-size="13" font-weight="700" fill="#059669">
+<tspan x="142.0" dy="0">NotebookLM -&gt; Qwen JSON schema</tspan>
+<tspan x="142.0" dy="19">-&gt; human QA</tspan>
+</text>
+<line x1="142.0" y1="804.0" x2="438.0" y2="804.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="142.0" y="826.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="142.0" dy="0">服务/产品/症状方案/会员/机构信息</tspan>
+</text>
+</g>
+<g id="node-kb_store">
+<path d="M 555.0 716.0 C 555.0 695.0, 895.0 695.0, 895.0 716.0 L 895.0 824.0 C 895.0 845.0, 555.0 845.0, 555.0 824.0 Z" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+<ellipse cx="725.0" cy="716.0" rx="170.0" ry="20" fill="none" stroke="#059669" stroke-width="2"/>
+<text x="577.0" y="732.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="577.0" dy="0">健康小屋知识库</tspan>
+</text>
+<text x="577.0" y="763.0" font-size="13" font-weight="700" fill="#059669">
+<tspan x="577.0" dy="0">JSON / Markdown content + FAISS</tspan>
+<tspan x="577.0" dy="19">+ info.db</tspan>
+</text>
+<line x1="577.0" y1="804.0" x2="873.0" y2="804.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="577.0" y="826.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="577.0" dy="0">data1/data/knowledge_base</tspan>
+</text>
+</g>
+<g id="node-qa_harness">
+<rect x="990.0" y="700.0" width="340.0" height="174.0" rx="18" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+<text x="1012.0" y="732.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="1012.0" dy="0">RAG QA 与回归报告</tspan>
+</text>
+<text x="1012.0" y="763.0" font-size="13" font-weight="700" fill="#d97706">
+<tspan x="1012.0" dy="0">pytest + kb_chat_report + vector</tspan>
+<tspan x="1012.0" dy="19">similarity</tspan>
+</text>
+<line x1="1012.0" y1="804.0" x2="1308.0" y2="804.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1012.0" y="826.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="1012.0" dy="0">tests/test_kb_chat.py /</tspan>
+<tspan x="1012.0" dy="18">test_reports</tspan>
+</text>
+</g>
+<g id="node-deploy_bundle">
+<rect x="1425.0" y="700.0" width="330.0" height="138.0" rx="18" fill="#f3f4f6" stroke="#6b7280" stroke-width="2"/>
+<text x="1447.0" y="732.0" font-size="19" font-weight="700" fill="#111827">
+<tspan x="1447.0" dy="0">部署与迁移边界</tspan>
+</text>
+<text x="1447.0" y="763.0" font-size="13" font-weight="700" fill="#6b7280">
+<tspan x="1447.0" dy="0">data1 runtime bundle +</tspan>
+<tspan x="1447.0" dy="19">frontend/miniprogram deploy</tspan>
+</text>
+<line x1="1447.0" y1="804.0" x2="1733.0" y2="804.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="1447.0" y="826.0" font-size="12" font-weight="400" fill="#4b5563">
+<tspan x="1447.0" dy="0">scripts/package_data1_bundle.py /</tspan>
+<tspan x="1447.0" dy="18">deployment</tspan>
+</text>
+</g>
+</g>
+<g id="callouts">
+<g id="callout-contract_warning"><rect x="300.0" y="560.0" width="430.0" height="54.0" rx="27.0" fill="#fff7ed" stroke="#fb923c" stroke-width="1.4"/><text x="314.0" y="582.0" font-size="12" font-weight="700" fill="#475569">
+<tspan x="314.0" dy="0">已收敛: Web / 小程序 / pytest 使用 messages + stream +</tspan>
+<tspan x="314.0" dy="18">extra_body</tspan>
+</text></g>
+<g id="callout-compliance_boundary"><rect x="1390.0" y="865.0" width="390.0" height="36.0" rx="18.0" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.4"/><text x="1404.0" y="887.0" font-size="12" font-weight="700" fill="#475569">
+<tspan x="1404.0" dy="0">公开上线受 ICP / 生成式 AI 备案 / 健康类目约束</tspan>
+</text></g>
+</g>
+</svg>

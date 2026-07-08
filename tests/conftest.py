@@ -35,4 +35,5 @@ def pytest_sessionfinish(session: pytest.Session, exitstatus: int) -> None:
 
     paths = write_reports(results)
     print(f"\n[KB_CHAT_GENERATE_REPORT] wrote: {paths.json_path}")
+    print(f"[KB_CHAT_GENERATE_REPORT] wrote: {paths.md_path}")
     print(f"[KB_CHAT_GENERATE_REPORT] wrote: {paths.html_path}\n")

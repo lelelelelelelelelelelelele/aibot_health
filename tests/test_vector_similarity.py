@@ -2,25 +2,16 @@
 向量匹配相似度专项测试
 用于测试RAG系统中向量检索和匹配功能，特别关注相似度/质量评分
 """
-from pathlib import Path
-from urllib.parse import quote
 import httpx
-import yaml
 import json
 import time
 import re
 from datetime import datetime
 
-
-def build_messages(user_text: str, history: list | None = None) -> list:
-    history = history or []
-    return history + [{"role": "user", "content": user_text}]
-
-
-def load_request_config() -> dict:
-    config_path = Path(__file__).parent / "kb_chat_request.yaml"
-    with config_path.open("r", encoding="utf-8") as file:
-        return yaml.safe_load(file)
+try:
+    from tests.kb_chat_contract import build_kb_chat_endpoint, build_kb_chat_payload
+except ImportError:  # pragma: no cover - supports direct script execution from tests/
+    from kb_chat_contract import build_kb_chat_endpoint, build_kb_chat_payload
 
 
 class VectorSimilarityTest:
@@ -36,20 +27,12 @@ class VectorSimilarityTest:
         print(f"\n执行相似度测试: {test_name}")
         print(f"问题: {question}")
         
-        # 临时修改配置，将return_direct设为True以获取向量匹配详情
-        config = load_request_config()
-        base_url = config["base_url"]
-        kb_name = config["kb_name"]
-        request_config = config["request"].copy()
-        request_config["return_direct"] = True
-        request_config["stream"] = False
-
-        endpoint = f"{base_url}/knowledge_base/local_kb/{quote(kb_name)}/chat/completions"
-
-        payload = {
-            **request_config,
-            "messages": build_messages(question),
-        }
+        endpoint = build_kb_chat_endpoint()
+        payload = build_kb_chat_payload(
+            question,
+            stream=False,
+            extra_body_overrides={"return_direct": True},
+        )
 
         start_time = time.time()
         response = httpx.post(endpoint, json=payload, timeout=60)
@@ -243,6 +226,7 @@ class VectorSimilarityTest:
         # 生成报告文件名
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_filename = os.path.join(report_dir, f"vector_similarity_test_report_{timestamp}.json")
+        md_report_filename = os.path.join(report_dir, f"vector_similarity_test_report_{timestamp}.md")
         
         # 统计测试结果
         total_tests = len(self.test_results)
@@ -265,6 +249,8 @@ class VectorSimilarityTest:
         # 写入报告文件
         with open(report_filename, 'w', encoding='utf-8') as f:
             json.dump(report, f, ensure_ascii=False, indent=2)
+        with open(md_report_filename, 'w', encoding='utf-8') as f:
+            f.write(self.generate_markdown_similarity_report(report))
         
         # 生成摘要报告
         summary = f"""
@@ -277,6 +263,7 @@ class VectorSimilarityTest:
 平均响应时间: {avg_response_time:.2f}秒
 
 详细结果请查看: {report_filename}
+Markdown源报告: {md_report_filename}
 """
         
         print(summary)
@@ -286,6 +273,50 @@ class VectorSimilarityTest:
         self.generate_html_similarity_report(report, html_report_filename)
         
         return report_filename
+
+    def generate_markdown_similarity_report(self, report: dict) -> str:
+        """
+        生成Markdown格式的向量相似度测试报告，作为可编辑源报告。
+        """
+        meta = report["report_metadata"]
+        lines = [
+            "# 向量相似度专项测试报告",
+            "",
+            f"- 生成时间: {meta['generated_at']}",
+            f"- 总测试数: {meta['total_tests']}",
+            f"- 匹配文档总数: {meta['total_docs_matched']}",
+            f"- 平均质量评分: {meta['avg_quality_score']:.2f}",
+            f"- 平均响应时间: {meta['avg_response_time']:.2f}秒",
+            "",
+            "| # | 测试 | 问题 | 匹配文档数 | 质量评分 | 来源预览 |",
+            "| --- | --- | --- | --- | --- | --- |",
+        ]
+        for i, result in enumerate(report.get("test_results", []), start=1):
+            scores = [
+                str(doc.get("quality_score"))
+                for doc in result.get("source_documents", [])
+                if doc.get("quality_score") is not None
+            ]
+            previews = [
+                str(doc.get("content_preview", ""))
+                for doc in result.get("source_documents", [])[:2]
+            ]
+            lines.append(
+                "| "
+                + " | ".join(
+                    [
+                        str(i),
+                        _md_cell(str(result.get("test_name", ""))),
+                        _md_cell(str(result.get("question", ""))),
+                        str(result.get("source_documents_count", 0)),
+                        _md_cell(", ".join(scores) or "N/A"),
+                        _md_cell("<br>".join(previews) or "N/A"),
+                    ]
+                )
+                + " |"
+            )
+        lines.append("")
+        return "\n".join(lines)
     
     def generate_html_similarity_report(self, report: dict, html_filename: str):
         """
@@ -368,6 +399,10 @@ class VectorSimilarityTest:
         
         with open(html_filename, 'w', encoding='utf-8') as f:
             f.write(html_content)
+
+
+def _md_cell(value: str) -> str:
+    return value.replace("|", "\\|").replace("\n", "<br>")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Phase 8 RAG Payload Contract Improvement Report</title>
+  <style>
+    body { font-family: Arial, "Microsoft YaHei", sans-serif; margin: 32px; color: #172033; line-height: 1.55; }
+    h1 { margin-bottom: 4px; }
+    h2 { margin-top: 28px; border-bottom: 1px solid #d9e2ef; padding-bottom: 4px; }
+    .verdict { background: #eef7f1; border: 1px solid #b7dfc2; padding: 14px 16px; border-radius: 8px; }
+    .warn { background: #fff7ed; border: 1px solid #fed7aa; padding: 12px 16px; border-radius: 8px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #d9e2ef; padding: 8px 10px; vertical-align: top; }
+    th { background: #f4f7fb; text-align: left; }
+    code { background: #f4f7fb; padding: 1px 4px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Phase 8 RAG Payload Contract Improvement Report</h1>
+  <p>Generated: 2026-07-08</p>
+
+  <div class="verdict">
+    <strong>Verdict:</strong> Web、小程序、pytest 现在都使用 <code>model + messages + stream + extra_body</code> 的 RAG payload 形态。
+  </div>
+  <p class="warn">仍未完成：submodule 交付整理。需要先在子仓提交/推送，再由父仓更新 gitlink pointer。</p>
+
+  <h2>Ordered Issues</h2>
+  <table>
+    <thead><tr><th>Priority</th><th>Issue</th><th>Evidence Before</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>P0</td><td>三端 payload contract 漂移</td><td>Web 和 pytest 把 RAG 参数放在顶层；小程序已放在 <code>extra_body</code></td><td>Fixed</td></tr>
+      <tr><td>P1</td><td>pytest 没有 contract guard</td><td>测试直接展开 YAML 请求配置，无法阻止漂移</td><td>Fixed</td></tr>
+      <tr><td>P1</td><td>架构文档仍写“待收敛”</td><td>Blueprint 和 schema 标记 payload 结构需统一</td><td>Fixed</td></tr>
+      <tr><td>P2</td><td>架构 PNG 未刷新</td><td>Cairo 动态库缺失，PNG 渲染失败</td><td>Open</td></tr>
+      <tr><td>P2</td><td>submodule 交付边界未完成</td><td><code>frontend</code> ahead 1；<code>miniprogram</code> ahead 12；父仓 miniprogram gitlink 仍漂移</td><td>Open</td></tr>
+      <tr><td>P2</td><td>score gate 等待真实样本校准</td><td>QA 已有可配置 score gate，但默认不启用硬阈值；需要 live backend 样本选择稳定阈值</td><td>Open</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Changes Made</h2>
+  <table>
+    <thead><tr><th>Area</th><th>Files</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>Web client</td><td><code>frontend/src/app/page.tsx</code></td><td>RAG controls moved into <code>extra_body</code></td></tr>
+      <tr><td>pytest fixture</td><td><code>tests/kb_chat_contract.py</code>, <code>tests/test_kb_chat.py</code></td><td>Shared payload builder now emits the contract; added contract, retrieval-evidence, and medical-boundary checks</td></tr>
+      <tr><td>Vector QA scripts</td><td><code>tests/test_vector_matching.py</code>, <code>tests/test_vector_similarity.py</code></td><td>Vector diagnostics now use the shared payload builder with <code>return_direct</code> under <code>extra_body</code></td></tr>
+      <tr><td>pytest reporting</td><td><code>tests/kb_chat_reporting.py</code>, <code>tests/conftest.py</code></td><td>Reports now include Markdown source output and docs/source/score evidence in Markdown/HTML</td></tr>
+      <tr><td>Vector reporting</td><td><code>tests/test_vector_matching.py</code>, <code>tests/test_vector_similarity.py</code></td><td>Vector diagnostics now emit Markdown source reports beside JSON/HTML</td></tr>
+      <tr><td>Web typing</td><td><code>frontend/src/types/chat.ts</code></td><td><code>ChatRequestConfig</code> now types RAG controls under <code>extra_body</code></td></tr>
+      <tr><td>Submodule audit</td><td><code>scripts/audit_submodules.py</code>, <code>reports/submodule_audit_REPORT.md</code>, <code>reports/submodule_audit_REPORT.html</code></td><td>Added repeatable read-only audit for child repo ahead/dirty state and parent gitlink drift</td></tr>
+      <tr><td>Completion audit</td><td><code>reports/phase8_completion_audit_REPORT.md</code>, <code>reports/phase8_completion_audit_REPORT.html</code></td><td>Added requirement-by-requirement completion evidence and blocked-item audit</td></tr>
+      <tr><td>Architecture docs</td><td><code>BLUEPRINT.md</code>, architecture schemas and rendered SVG/HTML</td><td>Contract language updated from pending to aligned, with remaining duplication risk noted</td></tr>
+      <tr><td>Project tracking</td><td><code>task_plan.md</code>, <code>progress.md</code></td><td>Payload contract tasks marked complete; submodule cleanup remains open</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Effect Difference</h2>
+  <table>
+    <thead><tr><th>Contract Aspect</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Web payload</td><td>Top-level RAG params</td><td><code>model + stream + messages + extra_body</code></td></tr>
+      <tr><td>Mini Program payload</td><td><code>model + messages + stream + extra_body</code></td><td>Unchanged; now matches the other clients</td></tr>
+      <tr><td>pytest payload</td><td>Top-level RAG params from YAML</td><td>Payload builder nests RAG params under <code>extra_body</code></td></tr>
+      <tr><td>Drift detection</td><td>Manual review</td><td>Contract tests fail on top-level RAG keys and check Web/mini program call sites</td></tr>
+      <tr><td>Local diagnostics</td><td>Vector scripts could spread request config and set top-level <code>return_direct</code></td><td>Vector scripts call the shared payload builder; pytest checks they do not reintroduce <code>**request_config</code></td></tr>
+      <tr><td>Retrieval evidence</td><td>Keyword assertions only</td><td>Business and medical-boundary cases require returned docs; reports show docs/source/score evidence</td></tr>
+      <tr><td>Score distribution</td><td>Collected for manual review only</td><td>Reports include min/avg/max/out-of-range summaries, and env-configurable gates can fail low-score runs</td></tr>
+      <tr><td>Medical boundary</td><td>One keyword-style boundary case</td><td>Added a focused surgery-refusal guard with forbidden unsafe phrasing</td></tr>
+      <tr><td>KB chat reports</td><td>JSON + HTML only</td><td>JSON + Markdown editable source + HTML readable report</td></tr>
+      <tr><td>Vector reports</td><td>JSON + HTML only</td><td>JSON + Markdown editable source + HTML readable report</td></tr>
+      <tr><td>Submodule status</td><td>Manual commands and chat summary</td><td>Repeatable JSON + Markdown + HTML audit shows recorded commit, current HEAD, ahead/behind, dirty count, and pointer drift</td></tr>
+      <tr><td>Completion audit</td><td>Scattered notes across chat and reports</td><td>Single Markdown + HTML audit maps each requirement to status and evidence</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Verification</h2>
+  <table>
+    <thead><tr><th>Check</th><th>Result</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>uv run pytest tests/test_kb_chat.py::test_kb_chat_request_contract_uses_extra_body -q</code></td><td>Passed</td><td>1 passed</td></tr>
+      <tr><td><code>uv run pytest tests/test_kb_chat.py -q</code></td><td>Passed with skips</td><td>8 passed, 8 skipped because KB backend was not reachable</td></tr>
+      <tr><td><code>python -m py_compile tests\kb_chat_contract.py tests\test_vector_matching.py tests\test_vector_similarity.py</code></td><td>Passed</td><td>Shared helper and vector diagnostics compile</td></tr>
+      <tr><td><code>npm run lint</code> in <code>frontend</code></td><td>Passed</td><td>No ESLint warnings or errors</td></tr>
+      <tr><td>Architecture render without PNG</td><td>Passed</td><td>SVG/HTML regenerated</td></tr>
+      <tr><td>Architecture render with PNG</td><td>Failed</td><td>Local Cairo library missing</td></tr>
+      <tr><td><code>python scripts\audit_submodules.py --repo E:\project\aibot --out-dir reports</code></td><td>Passed</td><td>Wrote JSON, Markdown, and HTML submodule audit reports</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Remaining Work</h2>
+  <ol>
+    <li>Decide whether to keep and push the existing <code>frontend</code> ahead-1 commit plus the new <code>page.tsx</code> change.</li>
+    <li>Decide whether to keep and push the 12 ahead commits in <code>miniprogram</code>.</li>
+    <li>After child repos are pushed, update parent repo gitlink pointers intentionally.</li>
+    <li>Calibrate score gate thresholds from live backend samples. The env-configurable gates exist, but stable defaults require real runs.</li>
+  </ol>
+</body>
+</html>

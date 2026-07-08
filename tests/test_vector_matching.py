@@ -2,45 +2,27 @@
 向量匹配专项测试
 用于测试RAG系统中向量检索和匹配功能
 """
-from pathlib import Path
-from urllib.parse import quote
 import httpx
-import yaml
 import json
 import time
 from datetime import datetime
 
-
-def build_messages(user_text: str, history: list | None = None) -> list:
-    history = history or []
-    return history + [{"role": "user", "content": user_text}]
-
-
-def load_request_config() -> dict:
-    config_path = Path(__file__).parent / "kb_chat_request.yaml"
-    with config_path.open("r", encoding="utf-8") as file:
-        return yaml.safe_load(file)
+try:
+    from tests.kb_chat_contract import build_kb_chat_endpoint, build_kb_chat_payload
+except ImportError:  # pragma: no cover - supports direct script execution from tests/
+    from kb_chat_contract import build_kb_chat_endpoint, build_kb_chat_payload
 
 
 def call_kb_chat_with_vector_info(question: str, return_direct: bool = True) -> dict:
     """
     调用知识库聊天API并获取向量匹配信息
     """
-    config = load_request_config()
-    base_url = config["base_url"]
-    kb_name = config["kb_name"]
-    request_config = config["request"].copy()
-    
-    # 设置return_direct为True以获取纯净的向量匹配结果
-    request_config["return_direct"] = return_direct
-    request_config["stream"] = False
-
-    endpoint = f"{base_url}/knowledge_base/local_kb/{quote(kb_name)}/chat/completions"
-
-    payload = {
-        **request_config,
-        "messages": build_messages(question),
-    }
+    endpoint = build_kb_chat_endpoint()
+    payload = build_kb_chat_payload(
+        question,
+        stream=False,
+        extra_body_overrides={"return_direct": return_direct},
+    )
 
     response = httpx.post(endpoint, json=payload, timeout=60)
     
@@ -306,6 +288,7 @@ class VectorMatchingTest:
         # 生成报告文件名
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_filename = os.path.join(report_dir, f"vector_matching_test_report_{timestamp}.json")
+        md_report_filename = os.path.join(report_dir, f"vector_matching_test_report_{timestamp}.md")
         
         # 统计测试结果
         total_tests = len(self.test_results)
@@ -329,6 +312,8 @@ class VectorMatchingTest:
         # 写入报告文件
         with open(report_filename, 'w', encoding='utf-8') as f:
             json.dump(report, f, ensure_ascii=False, indent=2)
+        with open(md_report_filename, 'w', encoding='utf-8') as f:
+            f.write(self.generate_markdown_vector_report(report))
         
         # 生成摘要报告
         summary = f"""
@@ -342,6 +327,7 @@ class VectorMatchingTest:
 平均每项匹配文档数: {avg_docs_found:.2f}个
 
 详细结果请查看: {report_filename}
+Markdown源报告: {md_report_filename}
 """
         
         print(summary)
@@ -351,6 +337,48 @@ class VectorMatchingTest:
         self.generate_html_vector_report(report, html_report_filename)
         
         return report_filename
+
+    def generate_markdown_vector_report(self, report: dict) -> str:
+        """
+        生成Markdown格式的向量匹配测试报告，作为可编辑源报告。
+        """
+        meta = report["report_metadata"]
+        lines = [
+            "# 向量匹配专项测试报告",
+            "",
+            f"- 生成时间: {meta['generated_at']}",
+            f"- 总测试数: {meta['total_tests']}",
+            f"- 成功匹配数: {meta['successful_matches']}",
+            f"- 匹配成功率: {meta['match_rate']:.2f}%",
+            f"- 平均响应时间: {meta['avg_response_time']:.2f}秒",
+            f"- 平均每项匹配文档数: {meta['avg_docs_found']:.2f}个",
+            "",
+            "| # | 测试 | 状态 | 问题 | 匹配文档数 | 相关性评分 | 关键词命中 |",
+            "| --- | --- | --- | --- | --- | --- | --- |",
+        ]
+        for i, result in enumerate(report.get("test_results", []), start=1):
+            analysis = result.get("matching_analysis", {})
+            status = "匹配成功" if analysis.get("relevance_found") else "匹配失败"
+            keywords = []
+            for item in analysis.get("content_relevance", []):
+                keywords.extend(item.get("keywords_found", []))
+            lines.append(
+                "| "
+                + " | ".join(
+                    [
+                        str(i),
+                        _md_cell(str(result.get("test_name", ""))),
+                        status,
+                        _md_cell(str(result.get("question", ""))),
+                        str(result.get("source_documents_count", 0)),
+                        str(analysis.get("question_relevance", 0)),
+                        _md_cell(", ".join(sorted(set(keywords))) or "N/A"),
+                    ]
+                )
+                + " |"
+            )
+        lines.append("")
+        return "\n".join(lines)
     
     def generate_html_vector_report(self, report: dict, html_filename: str):
         """
@@ -437,6 +465,10 @@ class VectorMatchingTest:
         
         with open(html_filename, 'w', encoding='utf-8') as f:
             f.write(html_content)
+
+
+def _md_cell(value: str) -> str:
+    return value.replace("|", "\\|").replace("\n", "<br>")
 
 
 if __name__ == "__main__":

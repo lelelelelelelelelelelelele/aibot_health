@@ -1,0 +1,34 @@
+flowchart TD
+  web_app["网页聊天入口<br/>Next.js + ProChat<br/>Git submodule: frontend"]
+  miniprogram["微信小程序入口<br/>Taro + wx.request<br/>Git submodule: miniprogram"]
+  chat_api["知识库 Chat API<br/>/knowledge_base/local_kb/{kb}/chat/completions<br/>OpenAI-compatible + docs-first SSE"]
+  rag_runtime["Chatchat RAG 运行时<br/>top_k / score_threshold / prompt_name<br/>CHATCHAT_ROOT=data1"]
+  model_services["模型与 Embedding 服务<br/>Qwen + DashScope embedding<br/>OneAPI-compatible"]
+  knowledge_pipeline["知识蒸馏流水线<br/>NotebookLM -> Qwen JSON schema -> human QA"]
+  kb_store[("健康小屋知识库<br/>JSON / Markdown + FAISS + info.db<br/>data1/data/knowledge_base")]
+  qa_harness["RAG QA 与回归报告<br/>pytest + kb_chat_report + vector similarity"]
+  deploy_bundle["部署与迁移边界<br/>data1 runtime bundle + frontend/miniprogram deploy"]
+
+  web_app -->|"POST + SSE stream"| chat_api
+  miniprogram -->|"wx.request chunk stream"| chat_api
+  chat_api -->|"messages + extra_body"| rag_runtime
+  rag_runtime -->|"embed + generate"| model_services
+  knowledge_pipeline --> kb_store
+  rag_runtime --> kb_store
+  qa_harness -.->|"acceptance questions"| chat_api
+  qa_harness -.-> kb_store
+  kb_store -->|"data1 bundle"| deploy_bundle
+
+  classDef front fill:#e0e7ff,stroke:#6366f1,stroke-width:2px
+  classDef core fill:#dbeafe,stroke:#2563eb,stroke-width:2px
+  classDef data fill:#d1fae5,stroke:#059669,stroke-width:2px
+  classDef external fill:#fce7f3,stroke:#db2777,stroke-width:2px
+  classDef quality fill:#fef3c7,stroke:#d97706,stroke-width:2px
+  classDef deploy fill:#f3f4f6,stroke:#6b7280,stroke-width:2px
+
+  class web_app,miniprogram front
+  class chat_api,rag_runtime core
+  class model_services external
+  class knowledge_pipeline,kb_store data
+  class qa_harness quality
+  class deploy_bundle deploy
