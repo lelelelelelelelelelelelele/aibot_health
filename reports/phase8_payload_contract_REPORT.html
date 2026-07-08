@@ -23,7 +23,7 @@
   <div class="verdict">
     <strong>Verdict:</strong> Web、小程序、pytest 现在都使用 <code>model + messages + stream + extra_body</code> 的 RAG payload 形态。
   </div>
-  <p class="warn">仍未完成：submodule 交付整理。需要先在子仓提交/推送，再由父仓更新 gitlink pointer。</p>
+  <p class="warn">Submodule 交付整理已收尾：frontend 和 miniprogram 已在子仓提交/推送，父仓 gitlink pointer 已更新。</p>
 
   <h2>Ordered Issues</h2>
   <table>
@@ -33,7 +33,7 @@
       <tr><td>P1</td><td>pytest 没有 contract guard</td><td>测试直接展开 YAML 请求配置，无法阻止漂移</td><td>Fixed</td></tr>
       <tr><td>P1</td><td>架构文档仍写“待收敛”</td><td>Blueprint 和 schema 标记 payload 结构需统一</td><td>Fixed</td></tr>
       <tr><td>P2</td><td>架构 PNG 未刷新</td><td>Cairo 动态库缺失，PNG 渲染失败</td><td>Open</td></tr>
-      <tr><td>P2</td><td>submodule 交付边界未完成</td><td><code>frontend</code> ahead 1；<code>miniprogram</code> ahead 12；父仓 miniprogram gitlink 仍漂移</td><td>Open</td></tr>
+      <tr><td>P2</td><td>submodule 交付边界收尾</td><td>子仓提交、推送、父仓 gitlink 更新、过时 frontend 汇总文件清理均已完成</td><td>Fixed</td></tr>
       <tr><td>P2</td><td>score gate 等待真实样本校准</td><td>QA 已有可配置 score gate，但默认不启用硬阈值；需要 live backend 样本选择稳定阈值</td><td>Open</td></tr>
     </tbody>
   </table>
@@ -51,7 +51,6 @@
       <tr><td>Submodule audit</td><td><code>scripts/audit_submodules.py</code>, <code>reports/submodule_audit_REPORT.md</code>, <code>reports/submodule_audit_REPORT.html</code></td><td>Added repeatable read-only audit for child repo ahead/dirty state and parent gitlink drift</td></tr>
       <tr><td>Completion audit</td><td><code>reports/phase8_completion_audit_REPORT.md</code>, <code>reports/phase8_completion_audit_REPORT.html</code></td><td>Added requirement-by-requirement completion evidence and blocked-item audit</td></tr>
       <tr><td>Architecture docs</td><td><code>BLUEPRINT.md</code>, architecture schemas and rendered SVG/HTML</td><td>Contract language updated from pending to aligned, with remaining duplication risk noted</td></tr>
-      <tr><td>Project tracking</td><td><code>task_plan.md</code>, <code>progress.md</code></td><td>Payload contract tasks marked complete; submodule cleanup remains open</td></tr>
     </tbody>
   </table>
 
@@ -90,10 +89,8 @@
 
   <h2>Remaining Work</h2>
   <ol>
-    <li>Decide whether to keep and push the existing <code>frontend</code> ahead-1 commit plus the new <code>page.tsx</code> change.</li>
-    <li>Decide whether to keep and push the 12 ahead commits in <code>miniprogram</code>.</li>
-    <li>After child repos are pushed, update parent repo gitlink pointers intentionally.</li>
     <li>Calibrate score gate thresholds from live backend samples. The env-configurable gates exist, but stable defaults require real runs.</li>
+    <li>Re-run the KB integration cases when a reachable public or local KB API is available.</li>
   </ol>
 </body>
 </html>

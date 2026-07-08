@@ -6,7 +6,7 @@ Generated: 2026-07-08
 
 Phase 8 的最高优先问题已收敛：Web、小程序、pytest 现在都使用 `model + messages + stream + extra_body` 的 RAG payload 形态。
 
-仍未完成的是 submodule 交付整理：`frontend` 和 `miniprogram` 还需要按子仓提交/推送，再由父仓更新 gitlink pointer。
+Submodule 交付整理也已收尾：`frontend` 和 `miniprogram` 已分别在子仓提交/推送，父仓 gitlink pointer 已更新到目标提交。
 
 ## Ordered Issues
 
@@ -16,7 +16,7 @@ Phase 8 的最高优先问题已收敛：Web、小程序、pytest 现在都使�
 | P1 | pytest 没有 contract guard | `tests/test_kb_chat.py` 直接展开 YAML 请求配置，无法阻止 RAG 参数回到顶层 | Fixed |
 | P1 | 架构文档仍写“待收敛” | `BLUEPRINT.md` 和 architecture schema 标记 payload 结构需统一 | Fixed |
 | P2 | 架构 PNG 未刷新 | Cairo 动态库缺失，`--png` 渲染失败 | Open |
-| P2 | submodule 交付边界未完成 | `frontend` ahead 1 且有未提交 `summary.md`；`miniprogram` ahead 12；父仓记录的 miniprogram gitlink 仍是旧 commit | Open |
+| P2 | submodule 交付边界收尾 | 子仓提交、推送、父仓 gitlink 更新、过时 frontend 汇总文件清理均已完成 | Fixed |
 | P2 | score gate 等待真实样本校准 | QA 已有可配置 score gate，但默认不启用硬阈值；需要 live backend 样本选择稳定阈值 | Open |
 
 ## Changes Made
@@ -34,7 +34,6 @@ Phase 8 的最高优先问题已收敛：Web、小程序、pytest 现在都使�
 | Completion audit | `reports/phase8_completion_audit_REPORT.md`, `reports/phase8_completion_audit_REPORT.html` | Added requirement-by-requirement completion evidence and blocked-item audit |
 | Architecture docs | `BLUEPRINT.md`, `docs/architecture/schema.yaml`, `docs/architecture/frontend_adapters/schema.yaml` | Updated contract language from pending convergence to aligned call sites with remaining duplication risk |
 | Rendered architecture | `docs/architecture/diagram.svg`, `docs/architecture/diagram.html`, `docs/architecture/frontend_adapters/diagram.svg`, `docs/architecture/frontend_adapters/diagram.html` | Re-rendered SVG/HTML views from updated schemas |
-| Project tracking | `task_plan.md`, `progress.md` | Marked payload contract and pytest fixture items complete; left submodule cleanup and broader QA open |
 
 ## Effect Difference
 
@@ -68,7 +67,5 @@ Phase 8 的最高优先问题已收敛：Web、小程序、pytest 现在都使�
 
 ## Remaining Work
 
-1. Decide whether to keep and push the existing `frontend` ahead-1 commit plus the new `page.tsx` change.
-2. Decide whether to keep and push the 12 ahead commits in `miniprogram`.
-3. After child repos are pushed, update the parent repo gitlink pointers intentionally.
-4. Calibrate score gate thresholds from live backend samples: the env-configurable gates exist, but stable default thresholds require real runs.
+1. Calibrate score gate thresholds from live backend samples: the env-configurable gates exist, but stable default thresholds require real runs.
+2. Re-run the KB integration cases when a reachable public or local KB API is available.

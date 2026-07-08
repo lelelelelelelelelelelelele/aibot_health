@@ -1,7 +1,7 @@
 meta:
   title: "前端适配器子图"
   subtitle: "两个 Git submodule: Web ProChat adapter 与 WeChat/Taro streaming adapter"
-  updated: "2026-07-08"
+  updated: "2026-07-09"
   version: "0.1"
   direction: top_to_bottom
 
@@ -47,7 +47,7 @@ nodes:
   - id: mini_submodule
     label: "miniprogram submodule"
     category: mini
-    signature: "origin: H:/local-git/aibot-miniprogram.git"
+    signature: "origin: E:/local-git/aibot-miniprogram.git"
     note: "Taro / wx.request / enableChunked"
     layer: middle
     layout: {x: 1265, y: 350, w: 390, h: 120}
@@ -135,7 +135,7 @@ groups:
 
 callouts:
   - id: submodule_state
-    label: "当前状态: frontend ahead 1; miniprogram ahead 12; 父仓 miniprogram pointer 已漂移"
+    label: "当前状态: frontend/miniprogram 子仓已推送；父仓 gitlink 已对齐"
     target: parent_repo
     fill: "#fff7ed"
     stroke: "#fb923c"

@@ -17,7 +17,6 @@ Rendered views:
 Frontend adapter subview:
 - `docs/architecture/frontend_adapters/schema.yaml`
 - `docs/architecture/frontend_adapters/diagram.svg`
-- `docs/architecture/frontend_adapters/diagram.png`
 - `docs/architecture/frontend_adapters/diagram.html`
 - `docs/architecture/frontend_adapters/diagram.mmd`
 
@@ -77,7 +76,7 @@ Do not treat `m frontend` or `M miniprogram` in the parent status as enough evid
 ## Current Gaps
 
 - The web client, mini program, and pytest configs now share the `messages + stream + extra_body` RAG payload shape at their request call sites. Remaining risk: this contract is still duplicated across TypeScript and pytest rather than generated from one shared cross-language schema.
-- Current submodule state should be cleaned before release: `frontend` is ahead of origin by 1 commit, `miniprogram` is ahead of origin by 12 commits, and the parent repo sees the `miniprogram` submodule pointer as drifted from the recorded commit.
+- Current submodule delivery state is clean: `frontend` points at `c7dc073`, `miniprogram` points at `25b0efb`, both child repos have been pushed to their configured remotes, and the parent gitlinks are aligned.
 - `main.py` currently mixes path validation, path repair, environment setup, optional tunnel startup, and service startup; this should be split before the project becomes a reusable deployment baseline.
 - RAG QA now includes payload contract checks, retrieval-source evidence parsing/reporting, configurable score gates (`KB_CHAT_REQUIRE_SIMILARITY_SCORES`, `KB_CHAT_MIN_SIMILARITY_SCORE`, `KB_CHAT_MIN_AVG_SIMILARITY_SCORE`), and a health/medical boundary guard. Remaining QA gap: live backend integration cases still need a reachable KB service and real samples to choose stable score thresholds.
 - The PNG is rendered from the deterministic SVG. It is a first-pass blueprint visual, not a hand-polished presentation poster.

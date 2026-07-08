@@ -22,7 +22,7 @@
   <div class="verdict">
     <strong>Verdict:</strong> 本地可完成的 Phase 8 改进已完成并有验证证据。
   </div>
-  <p class="blocked">剩余项需要外部状态或交付决策：KB backend live 验证、score gate 默认阈值校准、子仓提交/推送和父仓 gitlink 更新。</p>
+  <p class="blocked">Submodule 交付已收尾。剩余项需要外部状态：KB backend live 验证和 score gate 默认阈值校准。</p>
 
   <h2>Requirement Audit</h2>
   <table>
@@ -39,7 +39,7 @@
       <tr><td>架构文档同步</td><td>Complete</td><td>Blueprint/schema/SVG/HTML 已同步；PNG 因 Cairo 缺失未刷新</td></tr>
       <tr><td>submodule 状态可审计</td><td>Complete locally</td><td><code>scripts/audit_submodules.py</code> 生成 JSON/MD/HTML</td></tr>
       <tr><td>live backend 全量验收</td><td>Blocked</td><td>KB backend 不可达，集成用例 skip</td></tr>
-      <tr><td>子仓提交/推送与 gitlink 更新</td><td>Blocked</td><td>需要执行/确认 frontend 和 miniprogram 子仓交付决策</td></tr>
+      <tr><td>子仓提交/推送与 gitlink 更新</td><td>Complete</td><td><code>frontend</code> 已推送到 <code>c7dc073</code>; <code>miniprogram</code> 已推送到 <code>25b0efb</code>; 父仓 gitlink 已更新</td></tr>
     </tbody>
   </table>
 
@@ -51,8 +51,8 @@
       <tr><td><code>npm run lint</code> in frontend</td><td>Passed</td></tr>
       <tr><td>Python compile checks</td><td>Passed</td></tr>
       <tr><td>Submodule audit script</td><td>Passed; wrote JSON/Markdown/HTML</td></tr>
-      <tr><td>frontend submodule</td><td>ahead 1, dirty 3, no parent pointer drift</td></tr>
-      <tr><td>miniprogram submodule</td><td>ahead 12, dirty 0, parent pointer drift yes</td></tr>
+      <tr><td>frontend submodule</td><td>clean, parent pointer aligned at <code>c7dc073</code></td></tr>
+      <tr><td>miniprogram submodule</td><td>clean, parent pointer aligned at <code>25b0efb</code></td></tr>
     </tbody>
   </table>
 
@@ -61,8 +61,6 @@
     <li>Start or expose the KB backend at the configured test URL.</li>
     <li>Run live KB chat pytest without skips and inspect score summaries.</li>
     <li>Choose score gate defaults from real samples and document them.</li>
-    <li>Decide whether frontend <code>summary.md</code> belongs with the RAG contract commit.</li>
-    <li>Commit/push child repos, then update parent gitlink pointers intentionally.</li>
   </ol>
 </body>
 </html>

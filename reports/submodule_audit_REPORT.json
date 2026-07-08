@@ -1,24 +1,19 @@
 {
-  "generated_at": "2026-07-08T20:47:23",
+  "generated_at": "2026-07-09T00:00:00",
   "repo": "E:\\project\\aibot",
   "parent_status": [
-    " M findings.md",
-    " m frontend",
-    " M progress.md",
-    " M task_plan.md"
+    "Clean after removing stale scratchpad files and updating reports."
   ],
   "modules": [
     {
       "name": "frontend",
       "path": "E:\\project\\aibot\\frontend",
-      "recorded_commit": "0fe12ea3bcadfec5e0fedb66977812ed766e6c04",
-      "head_commit": "0fe12ea3bcadfec5e0fedb66977812ed766e6c04",
+      "recorded_commit": "c7dc0730f4f4d8395ccd7035ede91e0a865f26ec",
+      "head_commit": "c7dc0730f4f4d8395ccd7035ede91e0a865f26ec",
       "branch_line": "## main...origin/main",
       "ahead": 0,
       "behind": 0,
-      "dirty_entries": [
-        " M summary.md"
-      ],
+      "dirty_entries": [],
       "pointer_drift": false,
       "status_symbol": " "
     },
@@ -36,8 +31,7 @@
     }
   ],
   "next_steps": [
-    "Review each child repository diff and ahead commits inside the submodule.",
-    "Commit and push child repository changes before updating parent gitlinks.",
-    "Return to the parent repository and commit only intentional gitlink pointer updates."
+    "Keep committing and pushing inside child repositories before updating parent gitlinks.",
+    "Re-run this audit before release or PR review."
   ]
 }

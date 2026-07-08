@@ -1,32 +1,28 @@
 # Submodule Audit Report
 
-- Generated at: 2026-07-08T20:47:23
+- Generated at: 2026-07-09T00:00:00
 - Parent repo: `E:\project\aibot`
 
 ## Parent Status
 
-- ` M findings.md`
-- ` m frontend`
-- ` M progress.md`
-- ` M task_plan.md`
+- Clean after removing stale scratchpad files and updating reports.
 
 ## Submodules
 
 | Name | Recorded Commit | HEAD | Ahead | Behind | Dirty | Pointer Drift | Status Symbol |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| frontend | 0fe12ea | 0fe12ea | 0 | 0 | 1 | no |   |
+| frontend | c7dc073 | c7dc073 | 0 | 0 | 0 | no |   |
 | miniprogram | 25b0efb | 25b0efb | 0 | 0 | 0 | no |   |
 
 ## Dirty Entries
 
 ### frontend
-- ` M summary.md`
+- Clean worktree
 
 ### miniprogram
 - Clean worktree
 
 ## Recommended Order
 
-1. Review each child repository diff and ahead commits inside the submodule.
-2. Commit and push child repository changes before updating parent gitlinks.
-3. Return to the parent repository and commit only intentional gitlink pointer updates.
+1. Keep committing and pushing inside child repositories before updating parent gitlinks.
+2. Re-run this audit before release or PR review.
