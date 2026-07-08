@@ -1,10 +1,9 @@
 {
-  "generated_at": "2026-07-08T20:36:30",
+  "generated_at": "2026-07-08T20:47:23",
   "repo": "E:\\project\\aibot",
   "parent_status": [
     " M findings.md",
     " m frontend",
-    " M miniprogram",
     " M progress.md",
     " M task_plan.md"
   ],
@@ -26,14 +25,14 @@
     {
       "name": "miniprogram",
       "path": "E:\\project\\aibot\\miniprogram",
-      "recorded_commit": "ac52ff4bf2644fe9c4be7e9b2c8e7c0cddbaad8a",
+      "recorded_commit": "25b0efb8737b2d9280916331770a127123534928",
       "head_commit": "25b0efb8737b2d9280916331770a127123534928",
-      "branch_line": "## main...origin/main [ahead 12]",
-      "ahead": 12,
+      "branch_line": "## main...origin/main",
+      "ahead": 0,
       "behind": 0,
       "dirty_entries": [],
-      "pointer_drift": true,
-      "status_symbol": "+"
+      "pointer_drift": false,
+      "status_symbol": " "
     }
   ],
   "next_steps": [

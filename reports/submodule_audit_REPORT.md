@@ -1,13 +1,12 @@
 # Submodule Audit Report
 
-- Generated at: 2026-07-08T20:36:30
+- Generated at: 2026-07-08T20:47:23
 - Parent repo: `E:\project\aibot`
 
 ## Parent Status
 
 - ` M findings.md`
 - ` m frontend`
-- ` M miniprogram`
 - ` M progress.md`
 - ` M task_plan.md`
 
@@ -16,7 +15,7 @@
 | Name | Recorded Commit | HEAD | Ahead | Behind | Dirty | Pointer Drift | Status Symbol |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | frontend | 0fe12ea | 0fe12ea | 0 | 0 | 1 | no |   |
-| miniprogram | ac52ff4 | 25b0efb | 12 | 0 | 0 | yes | + |
+| miniprogram | 25b0efb | 25b0efb | 0 | 0 | 0 | no |   |
 
 ## Dirty Entries
 
